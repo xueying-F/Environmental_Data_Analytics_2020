@@ -68,7 +68,7 @@ Name_Score <- data.frame(Names,Scores)
 Name_Score
 
 Pass <- function(Scores){
-  ifelse(Scores>50, print("true"),print("false"))
+  ifelse(Scores>50, "TRUE","FALSE")
 }
 
 Score1 <- Pass(80); Score1
@@ -88,23 +88,11 @@ Score4 <- Pass(45); Score4
 
 ```{r}
 
-
-Pass <- function(Scores) {
-  if(Scores>50) {
-    print("true")
-  } 
-  else if (Scores<50) {
-    print("false")
-  }
-}
-
-Score1 <- Pass(80); Score1
-Score2 <- Pass(70); Score2
-Score3 <- Pass(95); Score3
-Score4 <- Pass(45); Score4
+Scores
+ifelse(Scores>50, print("TRUE"),print("FALSE"))
 
 ```
 
 12. QUESTION: Which option of `if` and `else` vs. `ifelse` worked? Why?
 
-> Answer: Bothe of them worked for this question, However, if there are more than two outcomes, `if` and `else ` should be used instead of `ifelse`.
+> Answer: `ifelse` worked.
