@@ -68,13 +68,13 @@ Name_Score <- data.frame(Names,Scores)
 Name_Score
 
 Pass <- function(Scores){
-  ifelse(Scores>50, "TRUE","FALSE")
+  ifelse(Scores>50, print("true"),print("false"))
 }
 
-Score1 <- Pass(80); Score1
-Score2 <- Pass(70); Score2
-Score3 <- Pass(95); Score3
-Score4 <- Pass(45); Score4
+Score1 <- Pass(80); 
+Score2 <- Pass(70); 
+Score3 <- Pass(95); 
+Score4 <- Pass(45); 
 
 ```
 
