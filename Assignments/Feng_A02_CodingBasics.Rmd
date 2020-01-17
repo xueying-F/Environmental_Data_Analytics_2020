@@ -64,17 +64,11 @@ Names<-c("Lily","Bill","Kiki","Elsa") # character vector
 Names
 Scores<-c(80,70,95,45) # numeric vector
 Scores
-Name_Score <- data.frame(Names,Scores)
+Pass <- c("True", "True", "True", "False")
+Pass
+Name_Score <- data.frame(Names,Scores,Pass)
 Name_Score
 
-Pass <- function(Scores){
-  ifelse(Scores>50, print("true"),print("false"))
-}
-
-Score1 <- Pass(80); 
-Score2 <- Pass(70); 
-Score3 <- Pass(95); 
-Score4 <- Pass(45); 
 
 ```
 
@@ -88,8 +82,10 @@ Score4 <- Pass(45);
 
 ```{r}
 
+
 Scores
-ifelse(Scores>50, print("TRUE"),print("FALSE"))
+Pass_Or_Not<-c(ifelse(Scores>50, print("TRUE"),print("FALSE")))
+Pass_Or_Not
 
 ```
 
