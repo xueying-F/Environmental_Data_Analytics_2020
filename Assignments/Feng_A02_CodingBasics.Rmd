@@ -64,9 +64,9 @@ Names<-c("Lily","Bill","Kiki","Elsa") # character vector
 Names
 Scores<-c(80,70,95,45) # numeric vector
 Scores
-Pass <- c("True", "True", "True", "False")
+Pass <- c("True", "True", "True", "False") # character vector
 Pass
-Name_Score <- data.frame(Names,Scores,Pass)
+Name_Score <- data.frame(Names,Scores,Pass) 
 Name_Score
 
 
@@ -81,8 +81,6 @@ Name_Score
 11. Apply your function to the vector with test scores that you created in number 5. 
 
 ```{r}
-
-
 Scores
 Pass_Or_Not<-c(ifelse(Scores>50, print("TRUE"),print("FALSE")))
 Pass_Or_Not
@@ -91,4 +89,4 @@ Pass_Or_Not
 
 12. QUESTION: Which option of `if` and `else` vs. `ifelse` worked? Why?
 
-> Answer: `ifelse` worked.
+> Answer: `ifelse` worked. If I want to work with vectors that are length > 1, I need to use ifelse. Also, the ifelse function performs the check on each component and returns a vector.
