@@ -198,9 +198,9 @@ Note that for every date prior to 1969, R has assigned the date in the 2000s rat
 USGS.flow.data$datetime <- format(USGS.flow.data$datetime, "%y%m%d")
 head(USGS.flow.data$datetime)
 
-#181231 means 2018/12/31
+#181231 means 2019/12/31
 create.early.dates <- (function(d) {
-       paste0(ifelse(d > 181231,"19","20"),d)
+       paste0(ifelse(d > 191231,"19","20"),d)
        })
 #
 USGS.flow.data$datetime <- create.early.dates(USGS.flow.data$datetime)
