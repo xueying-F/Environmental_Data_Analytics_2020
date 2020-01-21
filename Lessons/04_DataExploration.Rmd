@@ -33,7 +33,7 @@ If your working directory is not set to the folder you want, you have several op
 
 ```{r}
 # Absolute file path is commented out
-#setwd("/Users/katerisalk/Documents/Duke/Courses/Environmental_Data_Analytics")
+setwd("/Users/ethel/Desktop/Environ 872/Environmental_Data_Analytics_2020")
 ```
 
 You may change your working directory without coding by going to the Session menu in RStudio and navigating to the Set Working Directory tab. From there, you may select from a series of options to reset your working directory. 
@@ -63,17 +63,23 @@ You may also import datasets from the Files tab, but this is not recommended sin
 # Absolute file path (not recommended)
 #read.csv("/Users/katerisalk/Documents/Duke/Courses/Environmental_Data_Analytics/Data/Raw/USGS_Site02085000_Flow_Raw.csv")
 
-# Relative file path (friendly for users regardless of machine)
-USGS.flow.data <- read.csv("./Data/Raw/USGS_Site02085000_Flow_Raw.csv")
+# Relative file path (friendly for users regardless of machine) 
+#./go one file in use
+#../ go out one folder,then click tab
+# knit directary
+#~/ click tab
+USGS.flow.data <- read.csv("../Data/Raw/NEON_NIWO_Litter_trapdata_raw.csv")
 
 # What happens if we don't assign a name to our imported dataset?
-#read.csv("../Data/Raw/USGS_Site02085000_Flow_Raw.csv")
+# need to gave a name
+# need to use ./ instean ../
+USGS.flow.data <- read.csv("./Data/Raw/USGS_Site02085000_Flow_Raw.csv")
 
 # Another option is to choose with your browser
-# read.csv(file.choose())
+read.csv(file.choose())
 
 # To import .txt files, use read.table rather than read.csv
-#read.table()
+read.table()
 
 ```
 
@@ -85,11 +91,14 @@ Take a moment to read through the README file associated with the USGS dataset o
 ```{r}
 View(USGS.flow.data)
 # Alternate option: click on data frame in Environment tab
+# contain different data type
+# two demensional
 
 class(USGS.flow.data)
 colnames(USGS.flow.data)
 
-# Rename columns
+# Rename columns(have to list all the columns)
+# only change in data frame in R, not in excel
 colnames(USGS.flow.data) <- c("agency_cd", "site_no", "datetime", 
                               "discharge.max", "discharge.max.approval", 
                               "discharge.min", "discharge.min.approval", 
@@ -97,14 +106,18 @@ colnames(USGS.flow.data) <- c("agency_cd", "site_no", "datetime",
                               "gage.height.max", "gage.height.max.approval", 
                               "gage.height.min", "gage.height.min.approval", 
                               "gage.height.mean", "gage.height.mean.approval")
+
+colnames(USGS.flow.data)[1] <- c("agency") #change the first column name
+                              
 str(USGS.flow.data)
-dim(USGS.flow.data)
-length(USGS.flow.data)
+dim(USGS.flow.data) #dimension
+length(USGS.flow.data) #how many columns
+nrow(USGS.flow.data) #how mant rows
 
 head(USGS.flow.data)
 head(USGS.flow.data, 10)
 tail(USGS.flow.data, 5)
-USGS.flow.data[30000:30005, c(3, 8, 14)]
+USGS.flow.data[30000:30005, c(3, 8, 14)] #matrix: line 30000to30005, and column 3&8&14
 
 class(USGS.flow.data$datetime)
 class(USGS.flow.data$discharge.mean)
@@ -115,7 +128,7 @@ summary(USGS.flow.data)
 ```
 
 What happened to blank cells in the spreadsheet when they were imported into R?
-> Answer: 
+> Answer: N/A (num); Blank (factor)
 
 ## Adjusting Datasets
 
@@ -132,13 +145,15 @@ Question: What types of research questions might make it favorable to remove NAs
 > Answer: 
 
 ```{r}
-USGS.flow.data.complete <- na.omit(USGS.flow.data)
+USGS.flow.data.complete <- na.omit(USGS.flow.data) 
+#na.omit  only conatin the completed data set
+#remove N/A the blank goona gone
 dim(USGS.flow.data)
 dim(USGS.flow.data.complete)
 
 mean(USGS.flow.data.complete$discharge.mean)
 sd(USGS.flow.data.complete$discharge.mean)
-summary(USGS.flow.data.complete$discharge.mean)
+summary(USGS.flow.data.complete$discharge.mean) # no N/A in results
 
 ```
 
@@ -166,13 +181,14 @@ help(as.Date)
 # Write code for three different date formats. 
 # An example is provided to get you started.
 # (code must be uncommented)
-today <- Sys.Date()
+today <- Sys.Date() #system date year-month-date
 format(today, format = "%B")
-#format(today, format = "")
-#format(today, format = "")
-#format(today, format = "")
+format(today, format = "%b")
+format(today, format = "%Y")
+format(today, format = "%d")
 
 USGS.flow.data$datetime <- as.Date(USGS.flow.data$datetime, format = "%m/%d/%y") 
+head(USGS.flow.data$datetime)
 ```
 
 Note that for every date prior to 1969, R has assigned the date in the 2000s rather than the 1900s. This can be fixed with an `ifelse` statement inside a function. Run through the code below and write what is happening in the comment above each line.
@@ -180,8 +196,9 @@ Note that for every date prior to 1969, R has assigned the date in the 2000s rat
 ```{r}
 # 
 USGS.flow.data$datetime <- format(USGS.flow.data$datetime, "%y%m%d")
+head(USGS.flow.data$datetime)
 
-#
+#181231 means 2018/12/31
 create.early.dates <- (function(d) {
        paste0(ifelse(d > 181231,"19","20"),d)
        })
@@ -190,7 +207,7 @@ USGS.flow.data$datetime <- create.early.dates(USGS.flow.data$datetime)
 
 #
 USGS.flow.data$datetime <- as.Date(USGS.flow.data$datetime, format = "%Y%m%d") 
-
+head(USGS.flow.data$datetime)
 ```
 
 ## Saving datasets
@@ -199,7 +216,7 @@ We just edited our raw dataset into a processed form. We may want to return to t
 
 
 ```{r}
-write.csv(USGS.flow.data, file = "./Data/Processed/USGS_Site02085000_Flow_Processed.csv", row.names=FALSE)
+write.csv(USGS.flow.data, file = "./Data/Raw/USGS_Site02085000_Flow_Processed.csv", row.names=FALSE)
 
 ```
 
