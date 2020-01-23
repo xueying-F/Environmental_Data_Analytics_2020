@@ -1,6 +1,6 @@
 ---
 title: "Assignment 3: Data Exploration"
-author: "Student Name"
+author: "Xueying Feng"
 output: pdf_document
 geometry: margin=2.54cm
 ---
@@ -23,6 +23,13 @@ The completed exercise is due on Tuesday, January 28 at 1:00 pm.
 
 1. Check your working directory, load necessary packages (tidyverse), and upload two datasets: the ECOTOX neonicotinoid dataset (ECOTOX_Neonicotinoids_Insects_raw.csv) and the Niwot Ridge NEON dataset for litter and woody debris (NEON_NIWO_Litter_massdata_2018-08_raw.csv). Name these datasets "Neonics" and "Litter", respectively. 
 ```{r,  message = FALSE}
+getwd()
+setwd("~/Desktop/Environ 872/Environmental_Data_Analytics_2020/Data")
+
+library(tidyverse)
+
+Neonics <- read.csv("./Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.csv")
+Litter <- read.csv("./Data/Raw/NEON_NIWO_Litter_massdata_2018-08_raw.csv")
 
 ```
 
@@ -50,11 +57,16 @@ The completed exercise is due on Tuesday, January 28 at 1:00 pm.
 5. What are the dimensions of the dataset?
 
 ```{r}
+View(Neonics)
 
+colnames(Neonics)
+str(Neonics)
+dim(Neonics)
 ```
 
 6. Using the `summary` function, determine the most common effects that are studied. Why might these effects specifically be of interest?
 ```{r}
+summary(Neonics)
 
 ```
 
