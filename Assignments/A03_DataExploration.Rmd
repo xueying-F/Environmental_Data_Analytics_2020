@@ -26,11 +26,12 @@ The completed exercise is due on Tuesday, January 28 at 1:00 pm.
 1. Check your working directory, load necessary packages (tidyverse), and upload two datasets: the ECOTOX neonicotinoid dataset (ECOTOX_Neonicotinoids_Insects_raw.csv) and the Niwot Ridge NEON dataset for litter and woody debris (NEON_NIWO_Litter_massdata_2018-08_raw.csv). Name these datasets "Neonics" and "Litter", respectively. 
 ```{r,  message = FALSE}
 getwd()
+setwd("/Users/ethel/Desktop/Environ 872/Environmental_Data_Analytics_2020")
 
 library(tidyverse)
 
-Neonics<-read.csv("../Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.csv")
-Litter <- read.csv("../Data/Raw/NEON_NIWO_Litter_massdata_2018-08_raw.csv")
+Neonics<-read.csv("./Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.csv")
+Litter <- read.csv("./Data/Raw/NEON_NIWO_Litter_massdata_2018-08_raw.csv")
 
 ```
 
@@ -137,6 +138,8 @@ unique(Litter$collectDate)
 13. Using the `unique` function, determine how many plots were sampled at Niwot Ridge. How is the information obtained from `unique` different from that obtained from `summary`?
 
 ```{r}
+unique(Litter$plotID)
+summary(Litter$plotID)
 
 ```
 
@@ -156,7 +159,7 @@ ggplot(Litter) +
 ggplot(Litter) +
   geom_violin(aes(x = functionalGroup, y = dryMass), 
               draw_quantiles = c(0.25, 0.5, 0.75),
-              scale="area")
+              scale="count")
 
 ```
 
