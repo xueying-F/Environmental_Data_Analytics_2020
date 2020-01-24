@@ -3,6 +3,8 @@ title: "Assignment 3: Data Exploration"
 author: "Xueying Feng"
 output: pdf_document
 geometry: margin=2.54cm
+editor_options: 
+  chunk_output_type: console
 ---
 
 ## OVERVIEW
@@ -57,19 +59,17 @@ Litter <- read.csv("../Data/Raw/NEON_NIWO_Litter_massdata_2018-08_raw.csv")
 
 ```{r}
 View(Neonics)
-class(Neonics)
-str(Neonics)
 dim(Neonics)
+
 ```
 
 6. Using the `summary` function, determine the most common effects that are studied. Why might these effects specifically be of interest?
 ```{r}
-summary (Neonics) #all data is factor and integer type, no numeric data
-summary (Neonics$Chemical.Purity)
+summary (Neonics$Effect) 
 
 ```
 
-> Answer: 
+> Answer: The most common effects are mortality, population, behavior, feeding behaviour, and reproduction. These effects might specifically be of interest because these may be directly associated with species.
 
 7. Using the `summary` function, determine the six most commonly studied species in the dataset (common name). What do these species have in common, and why might they be of interest over other insects? Feel free to do a brief internet search for more information if needed.
 
@@ -88,7 +88,6 @@ class(Neonics$Conc.1..Author.)
 ```
 
 > Answer: The class of Conc.1..Author is factor. By default, read.csv checks the first few rows of your data to see whether to treat each variable as numeric. If it finds non-numeric values, it assumes the variable is character data, and character variables are converted to factors.
-
 
 
 ## Explore your data graphically (Neonics)
@@ -119,7 +118,7 @@ ggplot(Neonics, aes(x = Endpoint)) +
   geom_bar()
 ```
 
-> Answer: The two common end points are LOEL and NOEL
+> Answer: The two common end points are LOEL and NOEL.
 >LOEL: Lowest-observable-effect-level: lowest dose (concentration) producing effects that were significantly different (as reported by authors) from responses of controls (LOEAL/LOEC)
 >NOEL: No-observable-effect-level: highest dose (concentration) producing effects not significantly different from responses of controls according to author's reported statistical test (NOEAL/NOEC)
 
@@ -156,13 +155,14 @@ ggplot(Litter) +
 
 ggplot(Litter) +
   geom_violin(aes(x = functionalGroup, y = dryMass), 
-              draw_quantiles = c(0.25, 0.5, 0.75))
+              draw_quantiles = c(0.25, 0.5, 0.75),
+              scale="area")
 
 ```
 
 Why is the boxplot a more effective visualization option than the violin plot in this case?
 
-> Answer: 
+> Answer: We can get more information from boxplot, such as the median, upper (max) and lower (min) adjacent values, but violin plot cannot, which only has a line in this case.
 
 What type(s) of litter tend to have the highest biomass at these sites? 
 
