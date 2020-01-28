@@ -59,7 +59,6 @@ Litter <- read.csv("./Data/Raw/NEON_NIWO_Litter_massdata_2018-08_raw.csv")
 5. What are the dimensions of the dataset?
 
 ```{r}
-View(Neonics)
 dim(Neonics)
 
 ```
