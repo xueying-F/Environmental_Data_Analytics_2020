@@ -27,6 +27,7 @@ library(tidyverse)
 
 install.packages(lubridate)
 library(lubridate)
+
 NTL.phys.data <- read.csv("./Data/Raw/NTL-LTER_Lake_ChemistryPhysics_Raw.csv")
 
 colnames(NTL.phys.data)
@@ -195,7 +196,8 @@ NTL.phys.data.processed <-
   filter(lakename == "Paul Lake" | lakename == "Peter Lake") %>%
   select(lakename, sampledate:temperature_C) %>%
   mutate(temperature_F = (temperature_C*9/5) + 32)
-  
+
+#use NTL.phys.data dataset, then filter "Paul Lake" and "Peter Lake", then select X column to Y coloun, then add a column use "mutate"
 ```
 
 Notice that we did not place the dataset name inside the wrangling function but rather at the beginning.
