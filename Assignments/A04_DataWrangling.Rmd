@@ -1,8 +1,10 @@
 ---
 title: "Assignment 4: Data Wrangling"
-author: "Student Name"
+author: "Xueying Feng"
 output: pdf_document
 geometry: margin=2.54cm
+editor_options: 
+  chunk_output_type: console
 ---
 
 ## OVERVIEW
@@ -25,8 +27,32 @@ The completed exercise is due on Tuesday, February 4 at 1:00 pm.
 
 ```{r, message = FALSE}
 #1
+getwd()
+
+library(tidyverse)
+library(lubridate)
+
+EPAo3_1 <- read.csv("./Data/Raw/EPAair_O3_NC2018_raw.csv")
+EPAo3_2 <- read.csv("./Data/Raw/EPAair_O3_NC2019_raw.csv")
+EPAPM25_1 <- read.csv("./Data/Raw/EPAair_PM25_NC2018_raw.csv")
+EPAPM25_2 <- read.csv("./Data/Raw/EPAair_PM25_NC2019_raw.csv")
 
 #2
+dim(EPAo3_1)
+colnames(EPAo3_1)
+str(EPAo3_1)
+
+dim(EPAo3_2)
+colnames(EPAo3_2)
+str(EPAo3_2)
+
+dim(EPAPM25_1)
+colnames(EPAPM25_1)
+str(EPAPM25_1)
+
+dim(EPAPM25_2)
+colnames(EPAPM25_2)
+str(EPAPM25_2)
 ```
 
 ## Wrangle individual datasets to create processed files.
@@ -37,15 +63,85 @@ The completed exercise is due on Tuesday, February 4 at 1:00 pm.
 
 ```{r}
 #3
+class(EPAo3_1$Date)
+EPAo3_1$Date <- as.Date(EPAo3_1$Date, format = "%m/%d/%y")
+class(EPAo3_1$Date)
+EPAo3_1$Date <- format(EPAo3_1$Date, "%m/%d/%y")
+class(EPAo3_1$Date)
+create.early.dates <- (function(d) { paste0(d, ifelse(d < 010120 | d > 010120,"18","20")) })
+EPAo3_1$Date <- create.early.dates(EPAo3_1$Date)
+class(EPAo3_1$Date)
+EPAo3_1$Date <- as.Date(EPAo3_1$Date, format = "%m/%d/%Y")
+class(EPAo3_1$Date)
 
-#4
+class(EPAo3_2$Date)
+EPAo3_2$Date <- as.Date(EPAo3_2$Date, format = "%m/%d/%y")
+EPAo3_2$Date <- format(EPAo3_2$Date, "%m/%d/%y")
+create.early.dates <- (function(d) { paste0(d, ifelse(d < 010120 | d > 010120,"19","20")) })
+EPAo3_2$Date <- create.early.dates(EPAo3_2$Date)
+EPAo3_2$Date <- as.Date(EPAo3_2$Date, format = "%m/%d/%Y")
+class(EPAo3_2$Date)
 
-#5
 
-#6
+class(EPAPM25_1$Date)
+EPAPM25_1$Date <- as.Date(EPAPM25_1$Date, format = "%m/%d/%y")
+EPAPM25_1$Date <- format(EPAPM25_1$Date, "%m/%d/%y")
+create.early.dates <- (function(d) { paste0(d, ifelse(d < 010120 | d > 010120,"18","20")) })
+EPAPM25_1$Date <- create.early.dates(EPAPM25_1$Date)
+EPAPM25_1$Date <- as.Date(EPAPM25_1$Date, format = "%m/%d/%Y")
+class(EPAPM25_1$Date)
+
+
+class(EPAPM25_2$Date)
+EPAPM25_2$Date <- as.Date(EPAPM25_2$Date, format = "%m/%d/%y")
+EPAPM25_2$Date <- format(EPAPM25_2$Date, "%m/%d/%y")
+create.early.dates <- (function(d) { paste0(d, ifelse(d < 010120 | d > 010120,"19","20")) })
+EPAPM25_2$Date <- create.early.dates(EPAPM25_2$Date)
+EPAPM25_2$Date <- as.Date(EPAPM25_2$Date, format = "%m/%d/%Y")
+class(EPAPM25_2$Date)
 
 ```
 
+```{r}
+#4
+library(dplyr)
+
+EPAo3_1Select <-select(EPAo3_1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAo3_1Select
+
+EPAo3_2Seelect <-select(EPAo3_2, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAo3_2Seelect
+
+EPAPM25_1Seelect <-select(EPAPM25_1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAPM25_2Seelect 
+
+EPAPM25_2Seelect <-select(EPAPM25_2, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAPM25_2Seelect 
+```
+
+```{r}
+#5  what does "fill" mean? replce??
+EPAPM25_1.AQS_PARAMETER <- replace(EPAPM25_1Seelect,4,"PM2.5")
+EPAPM25_1.AQS_PARAMETER
+
+EPAPM25_2.AQS_PARAMETER <- replace(EPAPM25_2Seelect,4,"PM2.5")
+EPAPM25_2.AQS_PARAMETER
+```
+
+```{r}
+#6
+write.csv(EPAo3_1Select, row.names = FALSE, 
+          file ="./Data/Processed/EPAair_O3_NC2018_processed.csv")
+
+write.csv(EPAo3_2Select, row.names = FALSE, 
+          file ="./Data/Processed/EPAair_O3_NC2019_processed.csv")
+
+write.csv(EPAPM25_1.AQS_PARAMETER, row.names = FALSE, 
+          file ="./Data/Processed/EPAair_PM25_NC2018_processed.csv")
+
+write.csv(EPAPM25_2.AQS_PARAMETER, row.names = FALSE, 
+          file ="./Data/Processed/EPAair_PM25_NC2019_processed.csv")
+```
 
 ## Combine datasets
 7. Combine the four datasets with `rbind`. Make sure your column names are identical prior to running this code. 
