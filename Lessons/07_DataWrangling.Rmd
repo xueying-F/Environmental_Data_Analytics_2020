@@ -117,11 +117,22 @@ write.csv(NTL.nutrient.data.PeterPaul.gathered, row.names = FALSE,
 # Spread nutrient data into separate columns
 NTL.nutrient.data.PeterPaul.spread <- spread(NTL.nutrient.data.PeterPaul.gathered, nutrient, concentration)
 
-# Split components of cells into multiple columns
+# Split components of cells into multiple columns （原本的column分成另外几个column，原本的不见了
 # Opposite of 'separate' is 'unite'
 NTL.nutrient.data.PeterPaul.dates <- separate(NTL.nutrient.data.PeterPaul.subset, sampledate, c("Y", "m", "d"))
 
 # I recommend using lubridate rather than separate and unite.
+NTL.nutrient.data.PeterPaul.dates = 
+  NTL.nutrient.data.PeterPaul.subset %>% 
+  mutate(sampledate = ymd(sampledate)) %>% 
+  mutate_at(vars(sampledate), funs(year, month, day)) ## This is a function
+
+## Method 2
+library(lubridate)
+NTL.nutrient.data.PeterPaul.subset$Year <- year(ymd(NTL.nutrient.data.PeterPaul.subset$sampledate))
+NTL.nutrient.data.PeterPaul.subset$Month <- month(ymd(NTL.nutrient.data.PeterPaul.subset$sampledate)) 
+NTL.nutrient.data.PeterPaul.subset$day <- day(ymd(NTL.nutrient.data.PeterPaul.subset$sampledate))
+NTL.nutrient.data.PeterPaul.subset
 
 ```
 
@@ -206,7 +217,7 @@ dplyr functionality, combined with the pipes operator, allows us to split datase
 NTL.PeterPaul.summaries <- 
   NTL.phys.nutrient.data.PeterPaul %>%
   filter(depth == 0) %>%
-  group_by(lakename, month) %>% #group by lakename and goupr by month
+  group_by(lakename, month) %>% #group by lakename and goupe by month
   filter(!is.na(temperature_C) & !is.na(tn_ug) & !is.na(tp_ug)) %>%  #select temperature_Cis not NA...)
   summarise(meantemp = mean(temperature_C), 
             sdtemp = sd(temperature_C), 

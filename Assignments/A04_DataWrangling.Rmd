@@ -26,6 +26,7 @@ The completed exercise is due on Tuesday, February 4 at 1:00 pm.
 2. Explore the dimensions, column names, and structure of the datasets. 
 
 ```{r, message = FALSE}
+
 #1
 getwd()
 
@@ -64,39 +65,20 @@ str(EPAPM25_2)
 ```{r}
 #3
 class(EPAo3_1$Date)
-EPAo3_1$Date <- as.Date(EPAo3_1$Date, format = "%m/%d/%y")
-class(EPAo3_1$Date)
-EPAo3_1$Date <- format(EPAo3_1$Date, "%m/%d/%y")
-class(EPAo3_1$Date)
-create.early.dates <- (function(d) { paste0(d, ifelse(d < 010120 | d > 010120,"18","20")) })
-EPAo3_1$Date <- create.early.dates(EPAo3_1$Date)
-class(EPAo3_1$Date)
-EPAo3_1$Date <- as.Date(EPAo3_1$Date, format = "%m/%d/%Y")
+EPAo3_1$Date <- as.Date(EPAo3_1$Date, format = "%m/%d/%Y") 
 class(EPAo3_1$Date)
 
 class(EPAo3_2$Date)
-EPAo3_2$Date <- as.Date(EPAo3_2$Date, format = "%m/%d/%y")
-EPAo3_2$Date <- format(EPAo3_2$Date, "%m/%d/%y")
-create.early.dates <- (function(d) { paste0(d, ifelse(d < 010120 | d > 010120,"19","20")) })
-EPAo3_2$Date <- create.early.dates(EPAo3_2$Date)
 EPAo3_2$Date <- as.Date(EPAo3_2$Date, format = "%m/%d/%Y")
 class(EPAo3_2$Date)
 
 
 class(EPAPM25_1$Date)
-EPAPM25_1$Date <- as.Date(EPAPM25_1$Date, format = "%m/%d/%y")
-EPAPM25_1$Date <- format(EPAPM25_1$Date, "%m/%d/%y")
-create.early.dates <- (function(d) { paste0(d, ifelse(d < 010120 | d > 010120,"18","20")) })
-EPAPM25_1$Date <- create.early.dates(EPAPM25_1$Date)
 EPAPM25_1$Date <- as.Date(EPAPM25_1$Date, format = "%m/%d/%Y")
 class(EPAPM25_1$Date)
 
 
 class(EPAPM25_2$Date)
-EPAPM25_2$Date <- as.Date(EPAPM25_2$Date, format = "%m/%d/%y")
-EPAPM25_2$Date <- format(EPAPM25_2$Date, "%m/%d/%y")
-create.early.dates <- (function(d) { paste0(d, ifelse(d < 010120 | d > 010120,"19","20")) })
-EPAPM25_2$Date <- create.early.dates(EPAPM25_2$Date)
 EPAPM25_2$Date <- as.Date(EPAPM25_2$Date, format = "%m/%d/%Y")
 class(EPAPM25_2$Date)
 
@@ -109,22 +91,21 @@ library(dplyr)
 EPAo3_1Select <-select(EPAo3_1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 EPAo3_1Select
 
-EPAo3_2Seelect <-select(EPAo3_2, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
-EPAo3_2Seelect
+EPAo3_2Select <-select(EPAo3_2, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAo3_2Select
 
-EPAPM25_1Seelect <-select(EPAPM25_1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAPM25_1Select <-select(EPAPM25_1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 EPAPM25_2Seelect 
 
-EPAPM25_2Seelect <-select(EPAPM25_2, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
-EPAPM25_2Seelect 
+EPAPM25_2Select <-select(EPAPM25_2, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAPM25_2Select 
 ```
 
 ```{r}
 #5  what does "fill" mean? replce??
-EPAPM25_1.AQS_PARAMETER <- replace(EPAPM25_1Seelect,4,"PM2.5")
+EPAPM25_1.AQS_PARAMETER <- replace(EPAPM25_1Select,4,"PM2.5")
 EPAPM25_1.AQS_PARAMETER
-
-EPAPM25_2.AQS_PARAMETER <- replace(EPAPM25_2Seelect,4,"PM2.5")
+EPAPM25_2.AQS_PARAMETER <- replace(EPAPM25_2Select,4,"PM2.5")
 EPAPM25_2.AQS_PARAMETER
 ```
 
@@ -157,17 +138,72 @@ write.csv(EPAPM25_2.AQS_PARAMETER, row.names = FALSE,
 11. Save your processed dataset with the following file name: "EPAair_O3_PM25_NC1718_Processed.csv"
 
 ```{r}
-#7
+dim(EPAo3_1Select)
+dim(EPAo3_2Select)
+dim(EPAPM25_1.AQS_PARAMETER)
+dim(EPAPM25_2.AQS_PARAMETER)
 
+EPAair.18.19.slected <- rbind(EPAo3_1Select, EPAo3_2Select, EPAPM25_1.AQS_PARAMETER, EPAPM25_2.AQS_PARAMETER)
+dim(EPAair.18.19.slected)
+```
+
+```{r}
 #8
+EPAair.18.19.slected_Processed <- 
+  EPAair.18.19.slected %>%
+  filter(Site.Name %in% c("Linville Falls", "Durham Armory", "Leggett", "Hattie Avenue", 
+                           "Clemmons Middle", "Mendenhall School", "Frying Pan Mountain", 
+                           "West Johnston Co.", "Garinger High School", "Castle Hayne", 
+                           "Pitt Agri. Center", "Bryson City", "Millbrook School")) %>%
+  group_by(Date, Site.Name,AQS_PARAMETER_DESC,COUNTY) %>%
+  dplyr::summarise(meanAQI = mean(DAILY_AQI_VALUE), 
+            meanLAT = mean(SITE_LATITUDE),
+            meanLONG = mean(SITE_LONGITUDE))%>%
+  mutate(Year=year(Date),
+          Month=month(Date))%>%
+  select(Date, Month, Year, Site.Name:meanLONG)
+dim(EPAair.18.19.slected_Processed)
 
-#9
+ ## sepereat Steps
+EPAair.18.19.slected_SiteName <- 
+  EPAair.18.19.slected %>%
+  filter(Site.Name %in%  c("Linville Falls", "Durham Armory", "Leggett", "Hattie Avenue", 
+                           "Clemmons Middle", "Mendenhall School", "Frying Pan Mountain", 
+                           "West Johnston Co.", "Garinger High School", "Castle Hayne", 
+                           "Pitt Agri. Center", "Bryson City", "Millbrook School"))
+dim(EPAair.18.19.slected_SiteName)
 
-#10
+EPAair.18.19.slected_Mean<-group_by(EPAair.18.19.slected_SiteName,
+                                    Date,Site.Name,AQS_PARAMETER_DESC,COUNTY) %>%
+  dplyr::summarise(meanAQI = mean(DAILY_AQI_VALUE), 
+            meanLAT = mean(SITE_LATITUDE),
+            meanLONG = mean(SITE_LONGITUDE))
+dim(EPAair.18.19.slected_Mean)
 
-#11
+EPAair.18.19.slected_Mean$Year <- year(ymd(EPAair.18.19.slected_Mean$Date))
+EPAair.18.19.slected_Mean$Month <- month(ymd(EPAair.18.19.slected_Mean$Date)) 
+EPAair.18.19.slected_Mean    
+dim(EPAair.18.19.slected_Mean)
+
+EPAair.18.19.slected_MonthYearReorder<-select(EPAair.18.19.slected_Mean, Date, Month, 
+                                              Year, Site.Name:meanLONG)
+dim(EPAair.18.19.slected_MonthYearReorder)
+
 
 ```
+
+```{r}
+#9
+EPAair.18.19.slected.spread <- spread(EPAair.18.19.slected_Processed, AQS_PARAMETER_DESC,meanAQI )
+
+#10
+dim(EPAair.18.19.slected.spread)
+
+#11
+write.csv(EPAair.18.19.slected.spread, row.names = FALSE, 
+          file ="./Data/Processed/EPAair_O3_PM25_NC1718_Processed.csv")
+```
+
 
 
 ## Generate summary tables
@@ -177,13 +213,28 @@ write.csv(EPAPM25_2.AQS_PARAMETER, row.names = FALSE,
 
 ```{r}
 #12a
+EPAair.18.19.slected.summary <- 
+  EPAair.18.19.slected.spread %>%
+  group_by(Site.Name, Month, Year) %>% 
+  dplyr::summarise(meanOzone = mean(Ozone), 
+            meanPM2.5 = mean(PM2.5)) 
+  
+
+EPAair.18.19.slected.summary
 
 #12b
+EPAair.18.19.slected.summary2 <-
+  EPAair.18.19.slected.summary %>%
+  drop_na(Month)%>%
+  drop_na(Year)
+
+EPAair.18.19.slected.summary2
 
 #13
+dim(EPAair.18.19.slected.summary2)
 
 ```
 
 14. Why did we use the function `drop_na` rather than `na.omit`?
 
-> Answer: 
+> Answer: `drop_na` only delet NA in selected column, but `na.omit` delete all NA in all columns.
