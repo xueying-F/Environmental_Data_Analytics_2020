@@ -95,7 +95,7 @@ EPAo3_2Select <-select(EPAo3_2, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_
 EPAo3_2Select
 
 EPAPM25_1Select <-select(EPAPM25_1, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
-EPAPM25_1Select 
+EPAPM25_2Seelect 
 
 EPAPM25_2Select <-select(EPAPM25_2, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 EPAPM25_2Select 
@@ -163,6 +163,32 @@ EPAair.18.19.slected_Processed <-
           Month=month(Date))%>%
   select(Date, Month, Year, Site.Name:meanLONG)
 dim(EPAair.18.19.slected_Processed)
+
+ ## sepereat Steps
+EPAair.18.19.slected_SiteName <- 
+  EPAair.18.19.slected %>%
+  filter(Site.Name %in%  c("Linville Falls", "Durham Armory", "Leggett", "Hattie Avenue", 
+                           "Clemmons Middle", "Mendenhall School", "Frying Pan Mountain", 
+                           "West Johnston Co.", "Garinger High School", "Castle Hayne", 
+                           "Pitt Agri. Center", "Bryson City", "Millbrook School"))
+dim(EPAair.18.19.slected_SiteName)
+
+EPAair.18.19.slected_Mean<-group_by(EPAair.18.19.slected_SiteName,
+                                    Date,Site.Name,AQS_PARAMETER_DESC,COUNTY) %>%
+  dplyr::summarise(meanAQI = mean(DAILY_AQI_VALUE), 
+            meanLAT = mean(SITE_LATITUDE),
+            meanLONG = mean(SITE_LONGITUDE))
+dim(EPAair.18.19.slected_Mean)
+
+EPAair.18.19.slected_Mean$Year <- year(ymd(EPAair.18.19.slected_Mean$Date))
+EPAair.18.19.slected_Mean$Month <- month(ymd(EPAair.18.19.slected_Mean$Date)) 
+EPAair.18.19.slected_Mean    
+dim(EPAair.18.19.slected_Mean)
+
+EPAair.18.19.slected_MonthYearReorder<-select(EPAair.18.19.slected_Mean, Date, Month, 
+                                              Year, Site.Name:meanLONG)
+dim(EPAair.18.19.slected_MonthYearReorder)
+
 
 ```
 
