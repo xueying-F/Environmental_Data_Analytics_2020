@@ -253,5 +253,5 @@ print(Nutrientplot6)
 # Create several types of plots depicting PM2.5, divided by year. 
 # Choose which plot displays the data best and justify your choice. 
 
-
+# use bar plot when there is one number, and no distribution
 ```
