@@ -78,8 +78,7 @@ NvsP <-
   scale_color_viridis(option = "A", direction = -1) + 
   theme(legend.position = "right", 
         legend.text = element_text(size = 10), legend.title = element_text(size = 13))+
-  geom_smooth(method = "lm", colour="black", size=0.5, se = FALSE)+ # default is two curve lines;
-                                                                     #linear model also have two lines
+  geom_smooth(method = "lm", colour="black", size=0.5, se = FALSE)+ 
   xlim(0, 50) +
   ylim(0, 150)
 
@@ -100,7 +99,8 @@ Tempplot <-
   geom_boxplot() +
   labs(x=expression(paste("Month"))) + 
   labs(y=expression(paste("Temperature (℃)")))+
-  #ylim = range(0:120)+                             #I would like to change y scale but it does not work
+  labs(color="Lake Name")+
+  #ylim(0,120)+                             #I would like to change y scale but it does not work
   scale_y_continuous(expand = c(0.2, 0.2)) +
   scale_color_brewer(type = 'qual', palette = 'Set1') +
   theme(legend.position = "right")
@@ -112,6 +112,7 @@ TPplot <-
   geom_boxplot() +
   labs(x=expression(paste("Month"))) + 
   labs(y=expression(paste("Total Phosphorus (",mu,"g/L)")))+
+  labs(color="Lake Name")+
   scale_y_continuous(expand = c(0.2, 0.2)) +
   scale_color_brewer(palette = "Set1") +
   theme(legend.position = "right")
@@ -123,6 +124,7 @@ TNplot <-
   geom_boxplot() +
   labs(x=expression(paste("Month"))) + 
   labs(y=expression(paste("Total Nitrogen (",mu,"g/L)")))+
+  labs(color="Lake Name")+
   scale_y_continuous(expand = c(0.2, 0.2)) +
   scale_color_brewer(palette = "Set1") +
   theme(legend.position = "right")
@@ -151,16 +153,29 @@ Question: What do you observe about the variables of interest over seasons and b
 7. [Niwot Ridge] Now, plot the same plot but with NLCD classes separated into three facets rather than separated by color. 
 
 ```{r}
-#6  land use???
+#6
 NeedlesPlot <-
   ggplot(subset(Litter, functionalGroup=="Needles")) +
-  geom_point(aes(x = collectDate, y = dryMass, color=nlcdClass))
+  geom_point(aes(x = collectDate, y = dryMass, color=nlcdClass))+
+  scale_x_date(limits = as.Date(c("2016-06-01", "2019-10-31")),  
+               date_breaks = "3 months", date_labels = "%b %y ") +
+  labs(x=expression(paste("Collect Date"))) + 
+  labs(y=expression(paste("Dry Mass")))+
+  labs(color="Land Class")+
+  scale_y_continuous(expand = c(0.2, 0.2)) +
+  scale_color_brewer(type = 'qual', palette = 'Set2') +
+  theme(legend.position = "right")
 print(NeedlesPlot)
 
 #7
 NeedlesPlot_facet <-
   ggplot(subset(Litter, functionalGroup=="Needles")) +
   geom_point(aes(x = collectDate, y = dryMass))+
+  scale_x_date(limits = as.Date(c("2016-06-01", "2019-10-31")),  
+               date_breaks = "6 months", date_labels = "%b %y ") +
+  labs(x=expression(paste("Collect Date"))) + 
+  labs(y=expression(paste("Dry Mass")))+
+  scale_y_continuous(expand = c(0.2, 0.2)) +
   facet_wrap(~ nlcdClass, ncol=3)
 print(NeedlesPlot_facet)
 
@@ -168,4 +183,4 @@ print(NeedlesPlot_facet)
 
 Question: Which of these plots (6 vs. 7) do you think is more effective, and why? 
 
-> Answer:  I think #7 is more effective, because it is more clear to see dry mass of each lass. In #6, all classes data overlap, which is hard to distinguish.
+> Answer:  I think #6 is more effective, because it is more clear to compare dry mass of each class at same time. In #7, all classes data seperately, which is hard to compare
