@@ -93,14 +93,14 @@ print(NvsP)
 install.packages("RColorBrewer")
 library(RColorBrewer)
 
+library(ggplot2)
 # (a)
 Tempplot <-
   ggplot(PeterPaul.chem, aes(x = month, y = temperature_C, color = lakename)) +
   geom_boxplot() +
   labs(x=expression(paste("Month"))) + 
-  labs(y=expression(paste("Temperature (℃)")))+
+  labs(y=expression(Temperature (''^o*C)))+
   labs(color="Lake Name")+
-  #ylim(0,120)+                             #I would like to change y scale but it does not work
   scale_y_continuous(expand = c(0.2, 0.2)) +
   scale_color_brewer(type = 'qual', palette = 'Set1') +
   theme(legend.position = "right")
@@ -133,13 +133,13 @@ print(TNplot)
 
 #combined three graph three graph
 
-#cowplot" sometimes does not work
-dev.off() #stack overflow give this methods
+#cowplot" sometimes does not work, stack overflow give this methods
+dev.off() 
 
 library(cowplot)
 CombinedPlot<-  plot_grid(Tempplot+theme(legend.position="none"),   #delete legend by use legend.position="none"
                           TPplot+theme(legend.position="none"),TNplot, 
-                          nrow=1, labels=c('A', 'B', 'C'))   
+                          nrow=3, labels=c('A', 'B', 'C'))   
 
 CombinedPlot
 ```
@@ -158,7 +158,7 @@ NeedlesPlot <-
   ggplot(subset(Litter, functionalGroup=="Needles")) +
   geom_point(aes(x = collectDate, y = dryMass, color=nlcdClass))+
   scale_x_date(limits = as.Date(c("2016-06-01", "2019-10-31")),  
-               date_breaks = "3 months", date_labels = "%b %y ") +
+               date_breaks = "3 months", date_labels = "%b %Y ") +
   labs(x=expression(paste("Collect Date"))) + 
   labs(y=expression(paste("Dry Mass")))+
   labs(color="Land Class")+
@@ -172,7 +172,7 @@ NeedlesPlot_facet <-
   ggplot(subset(Litter, functionalGroup=="Needles")) +
   geom_point(aes(x = collectDate, y = dryMass))+
   scale_x_date(limits = as.Date(c("2016-06-01", "2019-10-31")),  
-               date_breaks = "6 months", date_labels = "%b %y ") +
+               date_breaks = "6 months", date_labels = "%b %Y ") +
   labs(x=expression(paste("Collect Date"))) + 
   labs(y=expression(paste("Dry Mass")))+
   scale_y_continuous(expand = c(0.2, 0.2)) +
