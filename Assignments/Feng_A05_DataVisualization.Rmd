@@ -32,7 +32,6 @@ The completed exercise is due on Tuesday, February 11 at 1:00 pm.
 getwd()
 
 library(tidyverse)
-library(ggplot2)
 library(cowplot)
 library(ggridges)
 
@@ -92,21 +91,55 @@ print(NvsP)
 5. [NTL-LTER] Make three separate boxplots of (a) temperature, (b) TP, and (c) TN, with month as the x axis and lake as a color aesthetic. Then, create a cowplot that combines the three graphs. Make sure that only one legend is present and that graph axes are aligned.
 
 ```{r}
-Nutrientplot <-
-  ggplot(PeterPaul.chem, aes(x = lakename, y = concentration, color = nutrient)) +
-  geom_boxplot() +
-  labs(x=expression(paste("concentration (mg/L"))) + # change your legend labels here
-  labs(y=expression(paste(".")))+
-  scale_color_manual(labels = c("NH34", "NO23","PO4","TN","YP"),
-                     values = c("#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84"))+
-# place your additional edits here
-  scale_y_continuous(expand = c(0, 0)) +
-  #scale_color_brewer(palette = "YlGnBu") +
-  #scale_color_manual(values = c("#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84")) +
-  #scale_color_viridis(discrete = TRUE, end = 0.8) +
-  theme(legend.position = "right")
-print(Nutrientplot)
+install.packages("RColorBrewer")
+library(RColorBrewer)
 
+# (a)
+Tempplot <-
+  ggplot(PeterPaul.chem, aes(x = month, y = temperature_C, color = lakename)) +
+  geom_boxplot() +
+  labs(x=expression(paste("Month"))) + 
+  labs(y=expression(paste("Temperature (℃)")))+
+  #ylim = range(0:120)+                             #I would like to change y scale but it does not work
+  scale_y_continuous(expand = c(0.2, 0.2)) +
+  scale_color_brewer(type = 'qual', palette = 'Set1') +
+  theme(legend.position = "right")
+print(Tempplot)
+
+# (b)
+TPplot <-
+  ggplot(PeterPaul.chem, aes(x = month, y = tp_ug, color = lakename)) +
+  geom_boxplot() +
+  labs(x=expression(paste("Month"))) + 
+  labs(y=expression(paste("Total Phosphorus (",mu,"g/L)")))+
+  scale_y_continuous(expand = c(0.2, 0.2)) +
+  scale_color_brewer(palette = "Set1") +
+  theme(legend.position = "right")
+print(TPplot)
+
+# (c)
+TNplot <-
+  ggplot(PeterPaul.chem, aes(x = month, y = tp_ug, color = lakename)) +
+  geom_boxplot() +
+  labs(x=expression(paste("Month"))) + 
+  labs(y=expression(paste("Total Nitrogen (",mu,"g/L)")))+
+  scale_y_continuous(expand = c(0.2, 0.2)) +
+  scale_color_brewer(palette = "Set1") +
+  theme(legend.position = "right")
+print(TNplot)
+
+
+#combined three graph three graph
+
+#cowplot" sometimes does not work
+dev.off() #stack overflow give this methods
+
+library(cowplot)
+CombinedPlot<-  plot_grid(Tempplot+theme(legend.position="none"),   #delete legend by use legend.position="none"
+                          TPplot+theme(legend.position="none"),TNplot, 
+                          nrow=1, labels=c('A', 'B', 'C'))   
+
+CombinedPlot
 ```
 
 Question: What do you observe about the variables of interest over seasons and between lakes? 
@@ -118,11 +151,21 @@ Question: What do you observe about the variables of interest over seasons and b
 7. [Niwot Ridge] Now, plot the same plot but with NLCD classes separated into three facets rather than separated by color. 
 
 ```{r}
+#6  land use???
+NeedlesPlot <-
+  ggplot(subset(Litter, functionalGroup=="Needles")) +
+  geom_point(aes(x = collectDate, y = dryMass, color=nlcdClass))
+print(NeedlesPlot)
 
-
+#7
+NeedlesPlot_facet <-
+  ggplot(subset(Litter, functionalGroup=="Needles")) +
+  geom_point(aes(x = collectDate, y = dryMass))+
+  facet_wrap(~ nlcdClass, ncol=3)
+print(NeedlesPlot_facet)
 
 ```
 
 Question: Which of these plots (6 vs. 7) do you think is more effective, and why? 
 
-> Answer: 
+> Answer:  I think #7 is more effective, because it is more clear to see dry mass of each lass. In #6, all classes data overlap, which is hard to distinguish.
