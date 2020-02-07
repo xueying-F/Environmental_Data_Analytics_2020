@@ -194,12 +194,12 @@ print(NvsP2)
 Nutrientplot <-
   ggplot(PeterPaul.chem.nutrients.gathered, aes(x = lakename, y = concentration, color = nutrient)) +
   geom_boxplot() +
-  labs(x=expression(paste("concentration (mg/L"))) + # change your legend labels here
-  labs(y=expression(paste(".")))+
+  labs(x=expression(paste("concentration (mg/L)"))) + # change your legend labels here
+  labs(y=expression(paste("")))+
   scale_color_manual(labels = c("NH34", "NO23","PO4","TN","YP"),
                      values = c("#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84"))+
 # place your additional edits here
-  scale_y_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0.5)) + # expand=c(0,0) has some space above the bars;0=lower space;0.5=upper space
   #scale_color_brewer(palette = "YlGnBu") +
   #scale_color_manual(values = c("#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84")) +
   #scale_color_viridis(discrete = TRUE, end = 0.8) +
@@ -245,6 +245,11 @@ ggplot(Neonics) +
   geom_bar(aes(x = Endpoint))
 
 
+#combine plots
+install.packages("ggpubr")
+library(ggpubr)
+#or
+library("cowplot")
 
 
 ```
