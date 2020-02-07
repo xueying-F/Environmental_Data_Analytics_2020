@@ -1,6 +1,6 @@
 ---
 title: "Assignment 5: Data Visualization"
-author: "Student Name"
+author: "Xueying Feng"
 output: pdf_document
 geometry: margin=2.54cm
 editor_options: 
@@ -29,17 +29,34 @@ The completed exercise is due on Tuesday, February 11 at 1:00 pm.
 
 ```{r}
 #1
+getwd()
 
+library(tidyverse)
+library(ggplot2)
+library(cowplot)
+library(ggridges)
+
+PeterPaul.chem <- 
+  read.csv("./Data/Processed/NTL-LTER_Lake_Chemistry_Nutrients_PeterPaul_Processed.csv")
+PeterPaul.gathered <-
+  read.csv("./Data/Processed/NTL-LTER_Lake_Nutrients_PeterPaulGathered_Processed.csv")
+Litter <- read.csv("./Data/Processed/NEON_NIWO_Litter_mass_trap_Processed.csv")
 
 #2
-
+PeterPaul.chem$sampledate <- as.Date(PeterPaul.chem$sampledate, format = "%Y-%m-%d")
+PeterPaul.gathered$sampledate <- as.Date(PeterPaul.gathered$sampledate, format = "%Y-%m-%d")
+Litter$collectDate <- as.Date(Litter$collectDate, format = "%Y-%m-%d")
 
 ```
 ## Define your theme
 3. Build a theme and set it as your default theme.
 
 ```{r}
+mytheme <- theme_minimal(base_size = 12, base_family = "Times") +
+  theme(axis.text.x = element_text(color = "DarkGrey"), 
+        legend.position = "top")
 
+theme_set(mytheme)
 
 ```
 
@@ -49,8 +66,25 @@ For numbers 4-7, create ggplot graphs and adjust aesthetics to follow best pract
 4. [NTL-LTER] Plot total phosphorus by phosphate, with separate aesthetics for Peter and Paul lakes. Add a line of best fit and color it black. Adjust your axes to hide extreme values.
 
 ```{r}
+install.packages("viridis")
+library(viridis)
 
+NvsP <-
+  ggplot(PeterPaul.chem, aes(x = po4, y = tp_ug, color = depth, shape = lakename)) +
+  geom_point(alpha = 0.95, size = 2) +  
+  labs(x=expression(paste("Phosphate (",mu,"g/L)"))) + 
+  labs(y=expression(paste("Total Phosphorus (",mu,"g/L)")))+
+  labs(color="Depth(m)")+ 
+  scale_shape_manual(values = c(16,17)) +  
+  scale_color_viridis(option = "A", direction = -1) + 
+  theme(legend.position = "right", 
+        legend.text = element_text(size = 10), legend.title = element_text(size = 13))+
+  geom_smooth(method = "lm", colour="black", size=0.5, se = FALSE)+ # default is two curve lines;
+                                                                     #linear model also have two lines
+  xlim(0, 50) +
+  ylim(0, 150)
 
+print(NvsP)
 
 ```
 
@@ -58,7 +92,20 @@ For numbers 4-7, create ggplot graphs and adjust aesthetics to follow best pract
 5. [NTL-LTER] Make three separate boxplots of (a) temperature, (b) TP, and (c) TN, with month as the x axis and lake as a color aesthetic. Then, create a cowplot that combines the three graphs. Make sure that only one legend is present and that graph axes are aligned.
 
 ```{r}
-
+Nutrientplot <-
+  ggplot(PeterPaul.chem, aes(x = lakename, y = concentration, color = nutrient)) +
+  geom_boxplot() +
+  labs(x=expression(paste("concentration (mg/L"))) + # change your legend labels here
+  labs(y=expression(paste(".")))+
+  scale_color_manual(labels = c("NH34", "NO23","PO4","TN","YP"),
+                     values = c("#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84"))+
+# place your additional edits here
+  scale_y_continuous(expand = c(0, 0)) +
+  #scale_color_brewer(palette = "YlGnBu") +
+  #scale_color_manual(values = c("#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84")) +
+  #scale_color_viridis(discrete = TRUE, end = 0.8) +
+  theme(legend.position = "right")
+print(Nutrientplot)
 
 ```
 
