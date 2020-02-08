@@ -96,52 +96,50 @@ library(RColorBrewer)
 library(ggplot2)
 # (a)
 Tempplot <-
-  ggplot(PeterPaul.chem, aes(x = month, y = temperature_C, color = lakename)) +
+  ggplot(PeterPaul.chem, aes(x = as.factor(month), y = temperature_C, color = lakename)) +
+  #facet_wrap("lakename")+
   geom_boxplot() +
   labs(x=expression(paste("Month"))) + 
   labs(y=expression(Temperature (''^o*C)))+
   labs(color="Lake Name")+
-  scale_y_continuous(expand = c(0.2, 0.2)) +
-  scale_color_brewer(type = 'qual', palette = 'Set1') +
+  scale_y_continuous(expand = c(0.2, 0.2),limits = c(-25, 175)) +
+  scale_color_brewer(type = 'qual', palette = 'Set1')+
   theme(legend.position = "right")
 print(Tempplot)
 
 # (b)
 TPplot <-
-  ggplot(PeterPaul.chem, aes(x = month, y = tp_ug, color = lakename)) +
+  ggplot(PeterPaul.chem, aes(x=as.factor(month), y = tp_ug, color = lakename)) +
   geom_boxplot() +
   labs(x=expression(paste("Month"))) + 
   labs(y=expression(paste("Total Phosphorus (",mu,"g/L)")))+
   labs(color="Lake Name")+
-  scale_y_continuous(expand = c(0.2, 0.2)) +
+  scale_y_continuous(expand = c(0.2, 0.2),limits = c(-25, 175)) +
   scale_color_brewer(palette = "Set1") +
   theme(legend.position = "right")
 print(TPplot)
 
 # (c)
 TNplot <-
-  ggplot(PeterPaul.chem, aes(x = month, y = tp_ug, color = lakename)) +
+  ggplot(PeterPaul.chem, aes(x = as.factor(month), y = tp_ug, color = lakename)) +
   geom_boxplot() +
   labs(x=expression(paste("Month"))) + 
   labs(y=expression(paste("Total Nitrogen (",mu,"g/L)")))+
   labs(color="Lake Name")+
-  scale_y_continuous(expand = c(0.2, 0.2)) +
+  scale_y_continuous(expand = c(0.2, 0.2),limits = c(-25, 175)) +
   scale_color_brewer(palette = "Set1") +
   theme(legend.position = "right")
 print(TNplot)
 
-
 #combined three graph three graph
-
-#cowplot" sometimes does not work, stack overflow give this methods
-dev.off() 
-
 library(cowplot)
 CombinedPlot<-  plot_grid(Tempplot+theme(legend.position="none"),   #delete legend by use legend.position="none"
                           TPplot+theme(legend.position="none"),TNplot, 
-                          nrow=3, labels=c('A', 'B', 'C'))   
+                          ncol=3, labels=c('A', 'B', 'C'))   
+print(CombinedPlot)
 
-CombinedPlot
+#dev.off()  #cowplot" sometimes does not work, stack overflow give this methods
+
 ```
 
 Question: What do you observe about the variables of interest over seasons and between lakes? 
