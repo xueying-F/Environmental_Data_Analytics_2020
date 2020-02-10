@@ -102,7 +102,7 @@ Tempplot <-
   labs(x=expression(paste("Month"))) + 
   labs(y=expression(Temperature (''^o*C)))+
   labs(color="Lake Name")+
-  scale_y_continuous(expand = c(0.2, 0.2),limits = c(-25, 175)) +
+  scale_y_continuous(expand = c(0.2, 0.2)) +
   scale_color_brewer(type = 'qual', palette = 'Set1')+
   theme(legend.position = "right")
 print(Tempplot)
@@ -114,7 +114,7 @@ TPplot <-
   labs(x=expression(paste("Month"))) + 
   labs(y=expression(paste("Total Phosphorus (",mu,"g/L)")))+
   labs(color="Lake Name")+
-  scale_y_continuous(expand = c(0.2, 0.2),limits = c(-25, 175)) +
+  scale_y_continuous(expand = c(0.2, 0.2)) +
   scale_color_brewer(palette = "Set1") +
   theme(legend.position = "right")
 print(TPplot)
@@ -126,16 +126,17 @@ TNplot <-
   labs(x=expression(paste("Month"))) + 
   labs(y=expression(paste("Total Nitrogen (",mu,"g/L)")))+
   labs(color="Lake Name")+
-  scale_y_continuous(expand = c(0.2, 0.2),limits = c(-25, 175)) +
+  scale_y_continuous(expand = c(0.2, 0.2)) +
   scale_color_brewer(palette = "Set1") +
   theme(legend.position = "right")
 print(TNplot)
 
 #combined three graph three graph
 library(cowplot)
-CombinedPlot<-  plot_grid(Tempplot+theme(legend.position="none"),   #delete legend by use legend.position="none"
-                          TPplot+theme(legend.position="none"),TNplot, 
-                          ncol=3, labels=c('A', 'B', 'C'))   
+CombinedPlot<-  plot_grid(Tempplot+theme(legend.position="none"),
+                          TPplot+theme(legend.position="none"),
+                          TNplot+theme(legend.position="bottom"), 
+                          nrow=3, labels=c('A', 'B', 'C'))   
 print(CombinedPlot)
 
 #dev.off()  #cowplot" sometimes does not work, stack overflow give this methods
