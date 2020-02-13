@@ -126,6 +126,9 @@ O3.onesample.wilcox <- wilcox.test(EPAair$Ozone, mu = 50, alternative = "less") 
 O3.onesample.wilcox
 O3.twosample.wilcox <- wilcox.test(EPAair$Ozone ~ EPAair$Year)
 O3.twosample.wilcox
+## The Wilcoxon Rank Sum test can be used to test the null hypothesis that two populations have the same continuous distribution
+
+## Nonparametric statistics refer to a statistical method in which the data is not required to fit a normal distribution
 ```
 
 ### Visualization and interpretation challenge
@@ -138,28 +141,29 @@ Create three plots, each with appropriately formatted axes and legends. Choose a
 
 ```{r}
 #1
-Ozone.plot1 <- ggplot(EPAair, aes(x = Ozone, color= as.factor(Year))) +
-  #geom_density(stat = "count", fill = "gray") +  #show actually counts
-  geom_density(fill = "gray") + #density is moving average
-  geom_vline(xintercept = 50, color = "#238b45", lty = 2, size = 0.9) + #lty:line type=2 is dash
-  scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
-print(Ozone.plot1)
+Ozone.plot1 <- ggplot(EPAair, aes(Ozone, fill = as.factor(Year), colour = as.factor(Year))) +
+  geom_density(alpha = 0.1) 
+
+Ozone.plot1
 
 #2
-Ozone.plot2 <- ggplot(EPAair, aes(x = Ozone), color = as.factor(Year)) +
-  stat_summary(aes(y = Year), fun.y = "mean")+
-  geom_boxplot() +
-  geom_density(fill = "gray") + #density is moving average
-  geom_vline(xintercept = 50, color = "#238b45", lty = 2, size = 0.9) + #lty:line type=2 is dash
-  scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
-print(Ozone.plot2)
+t.test(EPAair$Ozone[EPAair$Year == 2018]) 
+t.test(EPAair$Ozone[EPAair$Year == 2019]) 
+
+Ozone.plot2 <- ggplot(data = EPAair, aes(as.factor(Year), Ozone, color=Ozone)) +
+  geom_boxplot()+
+  stat_summary(fun.data = EPAair, fun.y = mean, geom = "point", size=2)+
+  #stat_summary(fun.data = EPAair,fun.y = "difference", geom="text", size=1) +
+  #scale_color_manual(values = c("gray30","darkgrey")) +
+  theme_bw()
+Ozone.plot2
+
 
 #3
-Ozone.plot3 <-
-  ggplot(EPAair, aes(x = Ozone)) +
-  geom_density(fill = "gray") +
-  geom_violin(aes(color = Year)) #
-print(Ozone.plot3)
+Ozone.plot3 <- ggplot(EPAair, aes(x=as.factor(Year), y=Ozone)) +
+  geom_violin(draw_quantiles = c(0.25, 0.5, 0.75))
+
+Ozone.plot3
 ```
 
 Now, write a summary of your findings, incorporating statistical output, reference to the figure(s), and a contextual interpretation.
