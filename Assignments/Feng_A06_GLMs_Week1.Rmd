@@ -69,7 +69,7 @@ Peter Lake was manipulated with additions of nitrogen and phosphorus over the ye
 
 4. Which application of the GLM will you use (t-test, one-way ANOVA, two-way ANOVA with main effects, or two-way ANOVA with interaction effects)? Justify your choice.
 
-> Answer: Two way ANOVA
+> Answer: Two way ANOVA. A two-way ANOVA  compares multiple groups of two factors.
 
 5. Run your test for TN. Include examination of groupings and consider interaction effects, if relevant.
 
@@ -81,37 +81,30 @@ nutrient_seasonally <- PeterPaul.surface93_96 %>%
   select(lakename, month, year4, tn_ug, tp_ug)
 nutrient_seasonally
 
-TN.anova.2way <- aov(data = nutrient_seasonally, tn_ug ~ lakename + month)
-summary(TN.anova.2way)
-
-# Run a post-hoc test for pairwise differences
-TukeyHSD(TN.anova.2way)
 
 ### Interaction effects
-TN.anova.2way2 <- aov(data = nutrient_seasonally, tn_ug ~ lakename * month)
-summary(TN.anova.2way2)
+TN.anova.2way <- lm(data = nutrient_seasonally, tn_ug ~ lakename * month)
+summary(TN.anova.2way)
 
-# Run a post-hoc test for pairwise differences
-TukeyHSD(TN.anova.2way2)
-
-
+#>>Estimate of Peter is larger than Paul lake, so the Total nitrogen of peter lake is higher.
+  
 #6
 nutrient_seasonally <- PeterPaul.surface93_96 %>%
   select(lakename, month, year4, tn_ug, tp_ug)
 nutrient_seasonally
 
 ### Interaction effects
-TP.anova.2way2 <- aov(data = nutrient_seasonally, tp_ug ~ lakename * month)
-summary(TP.anova.2way2)
+TP.anova.2way <- aov(data = nutrient_seasonally, tp_ug ~ lakename * month)
+summary(TP.anova.2way)
 
 # Run a post-hoc test for pairwise differences
-TukeyHSD(TP.anova.2way2)
+TukeyHSD(TP.anova.2way)
 
 TP.interaction <- with(nutrient_seasonally, interaction(lakename, month))
-TP.anova.2way3 <- aov(data = nutrient_seasonally, tp_ug ~ TP.interaction)
+TP.anova.2way2 <- aov(data = nutrient_seasonally, tp_ug ~ TP.interaction)
 
-TP.anova.2way3.groups <- HSD.test(TP.anova.2way3, "TP.interaction", group = TRUE)
-TP.anova.2way3.groups # take all the p value from TukeyHSD, and group for me
+TP.anova.2way2.groups <- HSD.test(TP.anova.2way2, "TP.interaction", group = TRUE)
+TP.anova.2way2.groups # take all the p value from TukeyHSD, and group for me
 
 ```
 
@@ -127,7 +120,7 @@ plot_TN <- ggplot(nutrient_seasonally, aes(x = month, y = tn_ug, color = lakenam
   labs(y=expression(paste("Total Nitrogen (",mu,"g/L)"))) +
   labs(color="Lake Name") +
   stat_summary(geom = "text", fun.y = max, vjust = -1, size = 4,
-  label = c("b", "ab", "b", "ab", "b", "a", "b", "a","ab", "ab"),
+  label = c("b", "a", "b", "a", "b", "a", "b", "a","b", "a"),
   position = position_dodge(width=0.75)) +  # how do we determine the numer 0.75
   scale_color_brewer(palette = "Set1")
   
