@@ -39,7 +39,7 @@ library(cowplot)
 library(agricolae)
 
 PeterPaul.nutrient <-
-  read.csv("../Data/Processed/NTL-LTER_Lake_Nutrients_PeterPaul_Processed.csv")
+  read.csv("./Data/Processed/NTL-LTER_Lake_Nutrients_PeterPaul_Processed.csv")
 
 #2
 PeterPaul.nutrient$sampledate <- as.Date(PeterPaul.nutrient$sampledate, format = "%Y-%m-%d")
@@ -52,13 +52,10 @@ class(PeterPaul.nutrient$sampledate)
 
 3. Wrangle your dataset so that it contains only surface depths and only the years 1993-1996, inclusive. Set month as a factor.
 ```{r}
-PeterPaul.surface93_96 <- filter(PeterPaul.nutrient,depth == "0" & year4 %in% c("1993","1994","1995","1996") ) %>%
-  select(lakeid:depth_id,depth,tn_ug:comments)   # Could I use another way to directly write 1993:1996
+PeterPaul.surface93_96 <- filter(PeterPaul.nutrient, depth == "0" 
+                                 & year4 %in% c("1993","1994","1995","1996") ) 
 PeterPaul.surface93_96
 
-class(PeterPaul.surface93_96$year4)
-PeterPaul.surface93_96$year4 <- as.factor(PeterPaul.surface93_96$year4)
-class(PeterPaul.surface93_96$year4)
 
 class(PeterPaul.surface93_96$month)
 PeterPaul.surface93_96$month <- as.factor(PeterPaul.surface93_96$month)
@@ -97,22 +94,11 @@ summary(TN.anova.2way2)
 # Run a post-hoc test for pairwise differences
 TukeyHSD(TN.anova.2way2)
 
-TN.interaction <- with(nutrient_seasonally, interaction(lakename, month))
-TN.anova.2way3 <- aov(data = nutrient_seasonally, tn_ug ~ TN.interaction)
-
-TN.anova.2way3.groups <- HSD.test(TN.anova.2way3, "TN.interaction", group = TRUE)
-TN.anova.2way3.groups
 
 #6
 nutrient_seasonally <- PeterPaul.surface93_96 %>%
   select(lakename, month, year4, tn_ug, tp_ug)
 nutrient_seasonally
-
-TP.anova.2way <- aov(data = nutrient_seasonally, tp_ug ~ lakename + month)
-summary(TP.anova.2way)
-
-# Run a post-hoc test for pairwise differences
-TukeyHSD(TP.anova.2way)
 
 ### Interaction effects
 TP.anova.2way2 <- aov(data = nutrient_seasonally, tp_ug ~ lakename * month)
@@ -125,7 +111,7 @@ TP.interaction <- with(nutrient_seasonally, interaction(lakename, month))
 TP.anova.2way3 <- aov(data = nutrient_seasonally, tp_ug ~ TP.interaction)
 
 TP.anova.2way3.groups <- HSD.test(TP.anova.2way3, "TP.interaction", group = TRUE)
-TP.anova.2way3.groups
+TP.anova.2way3.groups # take all the p value from TukeyHSD, and group for me
 
 ```
 
@@ -145,7 +131,6 @@ plot_TN <- ggplot(nutrient_seasonally, aes(x = month, y = tn_ug, color = lakenam
   position = position_dodge(width=0.75)) +  # how do we determine the numer 0.75
   scale_color_brewer(palette = "Set1")
   
-
 plot_TN
 
 
@@ -166,7 +151,7 @@ plot_TP
 #8
 CombinedPlot <- plot_grid(plot_TN+theme(legend.position="top"),
                           plot_TP+theme(legend.position="none"), 
-                          nrow=2, labels=c('A', 'B'))   
+                          nrow=2, align = 'v', axis = 'l', labels=c('A', 'B'))   
 print(CombinedPlot)
 
 
