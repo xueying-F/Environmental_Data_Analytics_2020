@@ -53,12 +53,16 @@ class(PeterPaul.nutrient$sampledate)
 3. Wrangle your dataset so that it contains only surface depths and only the years 1993-1996, inclusive. Set month as a factor.
 ```{r}
 PeterPaul.surface93_96 <- filter(PeterPaul.nutrient,depth == "0" & year4 %in% c("1993","1994","1995","1996") ) %>%
-  select(lakeid:depth_id,depth,tn_ug:comments)   # Could I use another way to directly write 1993-1996
+  select(lakeid:depth_id,depth,tn_ug:comments)   # Could I use another way to directly write 1993:1996
 PeterPaul.surface93_96
 
 class(PeterPaul.surface93_96$year4)
 PeterPaul.surface93_96$year4 <- as.factor(PeterPaul.surface93_96$year4)
 class(PeterPaul.surface93_96$year4)
+
+class(PeterPaul.surface93_96$month)
+PeterPaul.surface93_96$month <- as.factor(PeterPaul.surface93_96$month)
+class(PeterPaul.surface93_96$month)
 
 ```
 
@@ -68,7 +72,7 @@ Peter Lake was manipulated with additions of nitrogen and phosphorus over the ye
 
 4. Which application of the GLM will you use (t-test, one-way ANOVA, two-way ANOVA with main effects, or two-way ANOVA with interaction effects)? Justify your choice.
 
-> Answer: 
+> Answer: Two way ANOVA
 
 5. Run your test for TN. Include examination of groupings and consider interaction effects, if relevant.
 
@@ -76,15 +80,52 @@ Peter Lake was manipulated with additions of nitrogen and phosphorus over the ye
 
 ```{r}
 #5
-TN_seasonally <- PeterPaul.surface93_96 %>%
-  select(lakename, month, year4, tn_ug)
-TN_seasonally
+nutrient_seasonally <- PeterPaul.surface93_96 %>%
+  select(lakename, month, year4, tn_ug, tp_ug)
+nutrient_seasonally
 
-TN_seasonally.anova.2way <- aov(data = TN_seasonally, tn_ug ~ lakename + month)
-summary(TN_seasonally.anova.2way)
+TN.anova.2way <- aov(data = nutrient_seasonally, tn_ug ~ lakename + month)
+summary(TN.anova.2way)
+
+# Run a post-hoc test for pairwise differences
+TukeyHSD(TN.anova.2way)
+
+### Interaction effects
+TN.anova.2way2 <- aov(data = nutrient_seasonally, tn_ug ~ lakename * month)
+summary(TN.anova.2way2)
+
+# Run a post-hoc test for pairwise differences
+TukeyHSD(TN.anova.2way2)
+
+TN.interaction <- with(nutrient_seasonally, interaction(lakename, month))
+TN.anova.2way3 <- aov(data = nutrient_seasonally, tn_ug ~ TN.interaction)
+
+TN.anova.2way3.groups <- HSD.test(TN.anova.2way3, "TN.interaction", group = TRUE)
+TN.anova.2way3.groups
 
 #6
+nutrient_seasonally <- PeterPaul.surface93_96 %>%
+  select(lakename, month, year4, tn_ug, tp_ug)
+nutrient_seasonally
 
+TP.anova.2way <- aov(data = nutrient_seasonally, tp_ug ~ lakename + month)
+summary(TP.anova.2way)
+
+# Run a post-hoc test for pairwise differences
+TukeyHSD(TP.anova.2way)
+
+### Interaction effects
+TP.anova.2way2 <- aov(data = nutrient_seasonally, tp_ug ~ lakename * month)
+summary(TP.anova.2way2)
+
+# Run a post-hoc test for pairwise differences
+TukeyHSD(TP.anova.2way2)
+
+TP.interaction <- with(nutrient_seasonally, interaction(lakename, month))
+TP.anova.2way3 <- aov(data = nutrient_seasonally, tp_ug ~ TP.interaction)
+
+TP.anova.2way3.groups <- HSD.test(TP.anova.2way3, "TP.interaction", group = TRUE)
+TP.anova.2way3.groups
 
 ```
 
@@ -94,32 +135,30 @@ summary(TN_seasonally.anova.2way)
 
 ```{r}
 #7
-plot_TN <- ggplot(PeterPaul.surface93_96, aes(x = year4, y = tn_ug, color = lakename)) +
+plot_TN <- ggplot(nutrient_seasonally, aes(x = month, y = tn_ug, color = lakename)) +
   geom_boxplot() +
   labs(x=expression(paste("Month"))) + 
   labs(y=expression(paste("Total Nitrogen (",mu,"g/L)"))) +
   labs(color="Lake Name") +
   stat_summary(geom = "text", fun.y = max, vjust = -1, size = 4,
-  label = c("1", "1", "1", "1", "1", "1", "1", "1"),
-  position = position_dodge(width=0.75))   # how do we determine the numer 0.75
-  #scale_color_brewer(palette = "Set1") +
-  #theme(legend.position = "right")
+  label = c("b", "ab", "b", "ab", "b", "a", "b", "a","ab", "ab"),
+  position = position_dodge(width=0.75)) +  # how do we determine the numer 0.75
+  scale_color_brewer(palette = "Set1")
+  
 
 plot_TN
 
 
 
-plot_TP <- ggplot(PeterPaul.surface93_96, aes(x = month, y = tp_ug, color = lakename)) + # month does not work
+plot_TP <- ggplot(nutrient_seasonally, aes(x = month, y = tp_ug, color = lakename)) + # month does not work
   geom_boxplot() +
   labs(x=expression(paste("Month"))) + 
   labs(y=expression(paste("Total Phosphorus (",mu,"g/L)")))+
   labs(color="Lake Name")+
   stat_summary(geom = "text", fun.y = max, vjust = -1, size = 4,
-  label = c("1", "1", "1", "1", "1", "1", "1", "1"),
+  label = c("cd", "bcd", "d", "ab", "d", "a", "d", "abc", "cd", "abcd"),
   position = position_dodge(width=0.75)) +    # how do we determine the numer 0.75
-  scale_y_continuous(expand = c(0.2, 0.2)) 
-  #scale_color_brewer(palette = "Set1") +
-  #theme(legend.position = "right")
+  scale_color_brewer(palette = "Set1")
 
 plot_TP
 
