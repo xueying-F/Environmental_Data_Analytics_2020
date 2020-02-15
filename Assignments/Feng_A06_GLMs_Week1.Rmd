@@ -69,7 +69,7 @@ Peter Lake was manipulated with additions of nitrogen and phosphorus over the ye
 
 4. Which application of the GLM will you use (t-test, one-way ANOVA, two-way ANOVA with main effects, or two-way ANOVA with interaction effects)? Justify your choice.
 
-> Answer: Two way ANOVA. A two-way ANOVA  compares multiple groups of two factors.
+> Answer: I will use two way ANOVA. A two-way ANOVA compares multiple groups of two factors.
 
 5. Run your test for TN. Include examination of groupings and consider interaction effects, if relevant.
 
@@ -82,18 +82,14 @@ nutrient_seasonally <- PeterPaul.surface93_96 %>%
 nutrient_seasonally
 
 
-### Interaction effects
+# Interaction effects
 TN.anova.2way <- lm(data = nutrient_seasonally, tn_ug ~ lakename * month)
 summary(TN.anova.2way)
 
 #>>Estimate of Peter is larger than Paul lake, so the Total nitrogen of peter lake is higher.
   
 #6
-nutrient_seasonally <- PeterPaul.surface93_96 %>%
-  select(lakename, month, year4, tn_ug, tp_ug)
-nutrient_seasonally
-
-### Interaction effects
+# Interaction effects
 TP.anova.2way <- aov(data = nutrient_seasonally, tp_ug ~ lakename * month)
 summary(TP.anova.2way)
 
@@ -114,6 +110,7 @@ TP.anova.2way2.groups # take all the p value from TukeyHSD, and group for me
 
 ```{r}
 #7
+# plot1-TN
 plot_TN <- ggplot(nutrient_seasonally, aes(x = month, y = tn_ug, color = lakename)) +
   geom_boxplot() +
   labs(x=expression(paste("Month"))) + 
@@ -127,7 +124,7 @@ plot_TN <- ggplot(nutrient_seasonally, aes(x = month, y = tn_ug, color = lakenam
 plot_TN
 
 
-
+# plot2-TP
 plot_TP <- ggplot(nutrient_seasonally, aes(x = month, y = tp_ug, color = lakename)) + # month does not work
   geom_boxplot() +
   labs(x=expression(paste("Month"))) + 
