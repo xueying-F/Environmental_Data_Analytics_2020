@@ -86,7 +86,7 @@ nutrient_seasonally
 TN.anova.2way <- lm(data = nutrient_seasonally, tn_ug ~ lakename * month)
 summary(TN.anova.2way)
 
-#>>Estimate of Peter is larger than Paul lake, so the Total nitrogen of peter lake is higher.
+
   
 #6
 # Interaction effects
