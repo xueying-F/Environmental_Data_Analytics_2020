@@ -54,7 +54,6 @@ class(PeterPaul.nutrient$sampledate)
 ```{r}
 PeterPaul.surface93_96 <- filter(PeterPaul.nutrient, depth == "0" 
                                  & year4 %in% c("1993","1994","1995","1996") ) 
-PeterPaul.surface93_96
 
 
 class(PeterPaul.surface93_96$month)
@@ -79,7 +78,6 @@ Peter Lake was manipulated with additions of nitrogen and phosphorus over the ye
 #5
 nutrient_seasonally <- PeterPaul.surface93_96 %>%
   select(lakename, month, year4, tn_ug, tp_ug)
-nutrient_seasonally
 
 
 # Interaction effects
@@ -117,7 +115,7 @@ plot_TN <- ggplot(nutrient_seasonally, aes(x = month, y = tn_ug, color = lakenam
   labs(y=expression(paste("Total Nitrogen (",mu,"g/L)"))) +
   labs(color="Lake Name") +
   stat_summary(geom = "text", fun.y = max, vjust = -1, size = 4,
-  label = c("b", "a", "b", "a", "b", "a", "b", "a","b", "a"),
+  label = c("a", "b", "a", "b", "a", "b", "a","b", "a", "b"),
   position = position_dodge(width=0.75)) +  # how do we determine the numer 0.75
   scale_color_brewer(palette = "Set1")
   
@@ -125,13 +123,13 @@ plot_TN
 
 
 # plot2-TP
-plot_TP <- ggplot(nutrient_seasonally, aes(x = month, y = tp_ug, color = lakename)) + # month does not work
+plot_TP <- ggplot(nutrient_seasonally, aes(x = month, y = tp_ug, color = lakename)) + 
   geom_boxplot() +
   labs(x=expression(paste("Month"))) + 
   labs(y=expression(paste("Total Phosphorus (",mu,"g/L)")))+
   labs(color="Lake Name")+
   stat_summary(geom = "text", fun.y = max, vjust = -1, size = 4,
-  label = c("cd", "bcd", "d", "ab", "d", "a", "d", "abc", "cd", "abcd"),
+  label = c("bcd","cd", "ab", "d", "a", "d", "abc", "d", "abcd",  "cd"),
   position = position_dodge(width=0.75)) +    # how do we determine the numer 0.75
   scale_color_brewer(palette = "Set1")
 
