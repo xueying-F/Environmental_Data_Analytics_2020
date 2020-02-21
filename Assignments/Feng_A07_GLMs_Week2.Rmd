@@ -1,6 +1,6 @@
 ---
 title: "Assignment 7: GLMs week 2 (Linear Regression and beyond)"
-author: "Student Name"
+author: "Xueying Feng"
 output: pdf_document
 geometry: margin=2.54cm
 editor_options: 
@@ -27,10 +27,27 @@ The completed exercise is due on Tuesday, February 25 at 1:00 pm.
 
 ```{r}
 #1
+getwd()
+library(tidyverse)
+library(lubridate)
+#install.packages("nlme")
+library(nlme)
+#install.packages("piecewiseSEM")
+library(piecewiseSEM)
 
+ChemPhy <- read.csv("./Data/Raw/NTL-LTER_Lake_ChemistryPhysics_Raw.csv")
+Litter <- read.csv("./Data/Processed/NEON_NIWO_Litter_mass_trap_Processed.csv")
+
+ChemPhy$sampledate <- as.Date(ChemPhy$sampledate, format = "%m/%d/%y")
+Litter$collectDate <- as.Date(Litter$collectDate, format = "%Y-%m-%d")
 
 #2
+# Set theme
+mytheme <- theme_minimal(base_size = 12, base_family = "Times") +
+  theme(axis.text = element_text(color = "DarkGrey"), 
+        legend.position = "top")
 
+theme_set(mytheme)
 ```
 
 
@@ -47,10 +64,14 @@ Research question: What is the best set of predictors for lake temperatures in J
 
 ```{r}
 #3
-
+ChemPhy_predictors <- filter(ChemPhy, daynum %in% c(182:213)) %>%
+  select(lakename, year4, daynum, depth, temperature_C) %>%
+  na.exclude()
+ChemPhy_predictors
 
 #4
-
+TempAIC <- lm(data = ChemPhy_predictors, temperature_C ~ year4 + daynum + depth)
+step(TempAIC)
 ```
 
 5. What is the final set of explanatory variables that predict temperature from your multiple regression? How much of the observed variance does this model explain?
