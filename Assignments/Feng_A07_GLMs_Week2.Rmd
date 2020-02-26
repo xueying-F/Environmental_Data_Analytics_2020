@@ -85,10 +85,10 @@ summary(TempAIC)
 ```{r}
 #6
 LakeAncova.interaction <- aov(data = ChemPhy_Wrangle, temperature_C ~ depth * lakename)
-summary(LakeAncova.interaction)
+summary(LakeAncova.interaction) # show if it is significant interaction
 
 LakeAncova.interaction1 <- lm(data = ChemPhy_Wrangle, temperature_C ~ depth * lakename)
-summary(LakeAncova.interaction1)
+summary(LakeAncova.interaction1) # to get R-square
 ```
 
 7. Is there a significant interaction between depth and lakename? How much variance in the temperature observations does this explain?
@@ -106,7 +106,7 @@ ggplot(ChemPhy_Wrangle, aes(x = depth, y = temperature_C, color = lakename)) +
   ylim(0,35) +
   geom_smooth(method = "lm", se= FALSE) + 
   labs(x = "Depth (m)", y = expression("Temperature " ( degree~C)), color = "") +
-  theme(legend.spacing.x = unit(0, "cm"))
+  theme(legend.spacing.x = unit(1, "cm"))
 print(Temp_model)
 
 ```
