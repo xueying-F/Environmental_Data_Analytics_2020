@@ -69,11 +69,6 @@ Let's look at what the dataset contains for mean daily discharge.
 ggplot(EnoDischarge, aes(x = datetime, y = discharge.mean)) +
   geom_line() +
   labs(x = "", y = expression("Discharge (ft"^3*"/s)"))
-<<<<<<< HEAD
-
-
-=======
->>>>>>> b5ab192232003aa819925e52a835a3291c4c4107
 ```
 
 Notice there are missing data from 1971 to 1985. Gaps this large are generally an issue for time series analysis, as we don't have a continuous record of data or a good way to characterize any variability that happened over those years. We will illustrate a few workarounds to address these issues. 
@@ -82,13 +77,8 @@ Let's start by removing the NAs and splitting the dataset into the early and lat
 
 ```{r}
 EnoDischarge.complete <- EnoDischarge %>%
-<<<<<<< HEAD
-  drop_na(discharge.mean) # only frop na in discharge.mean 
+  drop_na(discharge.mean)# only frop na in discharge.mean 
                           # na.exclude, remove na from entire dataframe
-        
-=======
-  drop_na(discharge.mean)
->>>>>>> b5ab192232003aa819925e52a835a3291c4c4107
 
 EnoDischarge.early <- EnoDischarge.complete %>%
   filter(datetime < as.Date("1985-01-01"))
@@ -113,14 +103,14 @@ We first need to turn the discharge data into a time series object in R. This is
 Note: time series objects must be equispaced. In our case, we have daily data with no NAs in the data frame, so we don't need to worry about this. We will cover how to address data that are not equispaced later in the lesson.
 
 ```{r}
-<<<<<<< HEAD
+
 EnoDischarge.late_ts <- ts(EnoDischarge.late[[8]], frequency = 365) #ts: time series
                                                                     #[[8]]: column 8 of data set
 #time series do not use $, and we nee dto select exact column by []this way.
 # this will show in values rather than Data.
-=======
+
 EnoDischarge.late_ts <- ts(EnoDischarge.late[[8]], frequency = 365)
->>>>>>> b5ab192232003aa819925e52a835a3291c4c4107
+
 ```
 
 The `stl` function decomposes the time series object into its component parts. We must specify that the window for seasonal extraction is either "periodic" or a specific number of at least 7. The decomposition proceeds through a loess (locally estimated scatterplot smoothing) function.
@@ -128,7 +118,7 @@ The `stl` function decomposes the time series object into its component parts. W
 ```{r}
 ?stl
 # Generate the decomposition
-<<<<<<< HEAD
+
 EnoDischarge.late_Decomposed <- stl(EnoDischarge.late_ts, s.window = "periodic") 
 ### stl:  Decompose a time series into seasonal, trend and irregular components using loess (locally estimated scatterplot smoothing)
 
@@ -136,23 +126,19 @@ EnoDischarge.late_Decomposed <- stl(EnoDischarge.late_ts, s.window = "periodic")
 plot(EnoDischarge.late_Decomposed) # from year 0 to year 35 
                         # add seasonal, trend, remainder = data set (trend and seasonal scale is too small, so remainder and data are similar)
                         # seasonal means the cycle(could be daliy, season, day and night) repeat 35 times
-=======
+
 EnoDischarge.late_Decomposed <- stl(EnoDischarge.late_ts, s.window = "periodic")
 
 # Visualize the decomposed series. 
 plot(EnoDischarge.late_Decomposed)
->>>>>>> b5ab192232003aa819925e52a835a3291c4c4107
+
 
 # We can extract the components and turn them into data frames
+
 EnoDischarge.late_Components <- as.data.frame(EnoDischarge.late_Decomposed$time.series[,1:3])
 EnoDischarge.late_Components <- mutate(EnoDischarge.late_Components,
-<<<<<<< HEAD
-                      Observed = EnoDischarge.late$discharge.mean,    # adds new variables-Observed
-                      Date = EnoDischarge.late$datetime)              # adds new variables-
-=======
-                      Observed = EnoDischarge.late$discharge.mean,     
+                      Observed = EnoDischarge.late$discharge.mean,     ## adds new variables
                       Date = EnoDischarge.late$datetime)
->>>>>>> b5ab192232003aa819925e52a835a3291c4c4107
 
 # Visualize how the trend maps onto the data
 ggplot(EnoDischarge.late_Components) +
@@ -164,14 +150,9 @@ ggplot(EnoDischarge.late_Components) +
 # Visualize how the seasonal cycle maps onto the data
 ggplot(EnoDischarge.late_Components) +
   geom_line(aes(y = Observed, x = Date),  size = 0.25) +
-<<<<<<< HEAD
-  geom_line(aes(y = seasonal, x = Date), color = "#c13d75ff", size = 1) +
-=======
   geom_line(aes(y = seasonal, x = Date), color = "#c13d75ff") +
->>>>>>> b5ab192232003aa819925e52a835a3291c4c4107
   geom_hline(yintercept = 0, lty = 2) +
-  ylab(expression("Discharge (ft"^3*"/s)"))
-
+  ylab(expression("Discharge (ft"^3*"/s)"))  
 ```
 
 Note that the decomposition can yield negative values when we apply a seasonal adjustment or a trend adjustment to the data. The decomposition is not constrained by a lower bound of zero as discharge is in real life. Make sure to interpret with caution!
@@ -196,7 +177,7 @@ Note: ALWAYS look into the assumptions of a given test to ensure it matches with
 Let's say we wanted to know whether discharge was higher in the early period or the late period. Perhaps there was a change in the methodology of streamflow measurement between the two periods that caused a differene in the magnitude of measured discharge?
 
 ```{r}
-<<<<<<< HEAD
+
 EnoDischarge.early.subsample <- sample_n(EnoDischarge.early, 5000) #sample_n for shapiro.test
 EnoDischarge.late.subsample <- sample_n(EnoDischarge.late, 5000)
 
@@ -208,7 +189,7 @@ var.test(EnoDischarge.early$discharge.mean, EnoDischarge.late$discharge.mean) #�
 wilcox.test(EnoDischarge.early$discharge.mean, EnoDischarge.late$discharge.mean)
 summary(EnoDischarge.early$discharge.mean)
 summary(EnoDischarge.late$discharge.mean)
-=======
+
 EnoDischarge.early.subsample <- sample_n(EnoDischarge.early, 5000)
 EnoDischarge.late.subsample <- sample_n(EnoDischarge.late, 5000)
 
@@ -218,7 +199,7 @@ shapiro.test(EnoDischarge.late.subsample$discharge.mean)
 var.test(EnoDischarge.early$discharge.mean, EnoDischarge.late$discharge.mean)
 
 wilcox.test(EnoDischarge.early$discharge.mean, EnoDischarge.late$discharge.mean)
->>>>>>> b5ab192232003aa819925e52a835a3291c4c4107
+
 ```
 
 How might you interpret the results of this test, and how might you represent them graphically?
@@ -226,9 +207,7 @@ How might you interpret the results of this test, and how might you represent th
 <<<<<<< HEAD
 > median daliy charge in Eno Rive from 1827-1971 was significantly higher than mean daily discharger from 1985-2019 (wilcox.test, W = 1.17e+08, p<0.0001)
 >we can gapy boxplot and got them seperately.
-=======
->
->>>>>>> b5ab192232003aa819925e52a835a3291c4c4107
+
 
 ### Monotonic trend analysis
 
@@ -236,11 +215,11 @@ In general, detecting a monotonic trend requires a long sequence of data with fe
 
 Adjusting the data may be necessary to fulfill the assumptions of a trend test. These adjustments include **aggregation**, **subsampling**, and **interpolation**. What do each of these mean, and why might we want to use them?
 
-> aggregation: 
+> aggregation:The mathematical computation applied such as summing all the values, computing the average or picking the highest.
 
-> subsampling: 
+> subsampling: The function subsample can be used to build an appropriate weight matrix to be used with stabsel 
 
-> interpolation: 
+> interpolation: Generic function for replacing each NA with interpolated values.
 
 Common interpolation methods: 
 
@@ -313,17 +292,18 @@ We will calculate the mean monthly discharge for this dataset, rather than calcu
 EnoDischarge.late.monthly <- EnoDischarge.late %>%
   mutate(Year = year(datetime), 
          Month = month(datetime)) %>%
-  group_by(Year, Month) %>%
-  summarise(Discharge = mean(discharge.mean)) 
+  group_by(Year, Month) %>%  # the only column gonna be group by and summarise column
+  summarise(Discharge = mean(discharge.mean))  #calculate the mean monthly discharge
   
 EnoDischarge.late.monthly$Date <- as.Date(paste(EnoDischarge.late.monthly$Year, 
                                                 EnoDischarge.late.monthly$Month, 
-                                                1, sep="-"), 
+                                                1, sep="-"),  # 1 is 日期
                                           format = "%Y-%m-%d")
 
 # Generate time series (smk.test needs ts, not data.frame)
 EnoDischarge.late.monthly.ts <- ts(EnoDischarge.late.monthly$Discharge, frequency = 12, 
-                        start = c(1985, 10, 1), end = c(2019, 12, 1))
+                        start = c(1985, 10, 1), end = c(2019, 12, 1)) #frquency: 	the number of observations per unit of time.
+
 # Run SMK test
 EnoDischarge.late.trend <- smk.test(EnoDischarge.late.monthly.ts)
 
@@ -340,8 +320,8 @@ print(EnoDischarge.monthly)
 
 What would we conclude based on these findings? 
 
->
- 
+> Discharge has changed over the course of measurement while incorporating the seasonal component. no significant in seasonal (could be month, day, or season) monotonic trend.(report z and p value)
+
 If a significant trend was present, we could compute a **Sen's Slope** to quantify that trend (`sens.slope` function in the trend package).
 
 
