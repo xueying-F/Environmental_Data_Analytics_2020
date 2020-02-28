@@ -87,7 +87,7 @@ colnames(Days)[1] <- "Date"
 
 
 # 6
-GaringerOzone <- left_join(GaringerOzone_Wrangle, Date, by ='Date')
+GaringerOzone <- left_join(GaringerOzone_Wrangle, Days, by ='Date')
 
 ```
 
@@ -96,7 +96,14 @@ GaringerOzone <- left_join(GaringerOzone_Wrangle, Date, by ='Date')
 7. Create a ggplot depicting ozone concentrations over time. In this case, we will plot actual concentrations in ppm, not AQI values. Format your axes accordingly.
 
 ```{r}
+OzoneCon <-
+ggplot(GaringerOzone, aes(x = Date, y = Daily.Max.8.hour.Ozone.Concentration)) +
+  geom_point() +
+  geom_line() + 
+  labs(x = "Date", y = expression("Ozone Concentration (ppm)")) +
+  scale_x_date(date_breaks="1 year", date_labels="%Y")
 
+print(OzoneCon)
 
 ```
 
@@ -125,13 +132,22 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 
 
 # 9
+GaringerOzone.monthly <-  GaringerOzone %>%
+  mutate (Year = year(Date), Month = month(Date)) %>%
+  group_by(Year, Month) %>%  
+  summarise(OzoneConcentration = mean(Daily.Max.8.hour.Ozone.Concentration)) # columns will be Year, Month, OzoneConcentration
 
+GaringerOzone.monthly$Date <- as.Date(paste(GaringerOzone.monthly$Year, 
+                                            GaringerOzone.monthly$Month, 1, sep="-"),  
+                                      format = "%Y-%m-%d")
 
 # 10
-
+GaringerOzone.monthly.ts <- ts(GaringerOzone.monthly$OzoneConcentration, 
+                               frequency = 12, start = c(2010, 1, 1), end = c(2019, 12, 1))
 
 # 11
- 
+GaringerOzone.monthly.trend <- smk.test(GaringerOzone.monthly.ts)
+GaringerOzone.monthly.trend
 
 # 12
 
