@@ -82,7 +82,11 @@ GaringerOzone$Date <- as.Date(GaringerOzone$Date, format = "%m/%d/%Y")
 GaringerOzone_Wrangle <- select(GaringerOzone, Date, Daily.Max.8.hour.Ozone.Concentration, DAILY_AQI_VALUE) 
 
 # 5
+Days <- data.frame(seq(as.Date("2010-01-01"), as.Date("2019-12-13"), by=1))
 
+AllGaringerOzone<-merge(data.frame(Days),GaringerOzone_Wrangle,all.x=TRUE, by=1)
+
+colnames(AllGaringerOzone)[1] <- "Date"
 
 # 6
 
