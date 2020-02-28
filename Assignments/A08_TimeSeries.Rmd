@@ -83,13 +83,11 @@ GaringerOzone_Wrangle <- select(GaringerOzone, Date, Daily.Max.8.hour.Ozone.Conc
 
 # 5
 Days <- data.frame(seq(as.Date("2010-01-01"), as.Date("2019-12-13"), by=1))
+colnames(Days)[1] <- "Date"
 
-AllGaringerOzone<-merge(data.frame(Days),GaringerOzone_Wrangle,all.x=TRUE, by=1)
-
-colnames(AllGaringerOzone)[1] <- "Date"
 
 # 6
-
+GaringerOzone <- left_join(GaringerOzone_Wrangle, Date, by ='Date')
 
 ```
 
