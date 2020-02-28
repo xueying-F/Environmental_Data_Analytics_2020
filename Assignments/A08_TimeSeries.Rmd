@@ -1,6 +1,6 @@
 ---
 title: "Assignment 8: Time Series Analysis"
-author: "Student Name"
+author: "Xueying Feng"
 output: pdf_document
 geometry: margin=2.54cm
 editor_options: 
@@ -29,7 +29,24 @@ The completed exercise is due on Tuesday, March 3 at 1:00 pm.
 * Import the ten datasets from the Ozone_TimeSeries folder in the Raw data folder. These contain ozone concentrations at Garinger High School in North Carolina from 2010-2019 (the EPA air database only allows downloads for one year at a time). Call these GaringerOzone201*, with the star filled in with the appropriate year in each of ten cases.
 
 ```{r, message = FALSE}
+getwd()
+library(tidyverse)
+library(lubridate)
+#install.packages("zoo")
+library(zoo)
+#install.packages("trend")
+library(trend)
 
+GaringerOzone2010<- read.csv("./Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2010_raw.csv")
+GaringerOzone2011<- read.csv("./Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2011_raw.csv")
+GaringerOzone2012<- read.csv("./Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2012_raw.csv")
+GaringerOzone2013<- read.csv("./Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2013_raw.csv")
+GaringerOzone2014<- read.csv("./Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2014_raw.csv")
+GaringerOzone2015<- read.csv("./Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2015_raw.csv")
+GaringerOzone2016<- read.csv("./Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2016_raw.csv")
+GaringerOzone2017<- read.csv("./Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2017_raw.csv")
+GaringerOzone2018<- read.csv("./Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2018_raw.csv")
+GaringerOzone2019<- read.csv("./Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC2019_raw.csv")
 
 ```
 
@@ -47,13 +64,22 @@ The completed exercise is due on Tuesday, March 3 at 1:00 pm.
 
 ```{r}
 # 2 
+#install.packages ("plyr")
+libary(plyr)
+#install.packages("readr")
+libary(readr)
 
+Ozone_TimeSeries_Files = list.files(path = "./Data/Raw/Ozone_TimeSeries/", pattern="*.csv", full.names=TRUE) 
+Ozone_TimeSeries_Files
+
+GaringerOzone <- Ozone_TimeSeries_Files %>% 
+  plyr::ldply(read.csv)
 
 # 3
-
+GaringerOzone$Date <- as.Date(GaringerOzone$Date, format = "%m/%d/%Y")
 
 # 4
-
+GaringerOzone_Wrangle <- select(GaringerOzone, Date, Daily.Max.8.hour.Ozone.Concentration, DAILY_AQI_VALUE) 
 
 # 5
 
