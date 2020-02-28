@@ -69,6 +69,10 @@ libary(plyr)
 #install.packages("readr")
 libary(readr)
 
+Ozone_TimeSeries_Files = list.files(path = "Z:/872/Data/Raw/Ozone_TimeSeries/", pattern="*.csv", full.names=TRUE) 
+#Ozone_TimeSeries_Files
+
+
 Ozone_TimeSeries_Files = list.files(path = "./Data/Raw/Ozone_TimeSeries/", pattern="*.csv", full.names=TRUE) 
 Ozone_TimeSeries_Files
 
@@ -87,7 +91,7 @@ colnames(Days)[1] <- "Date"
 
 
 # 6
-GaringerOzone <- left_join(GaringerOzone_Wrangle, Days, by ='Date')
+GaringerOzone <- left_join(Days, GaringerOzone_Wrangle, by ='Date')
 
 ```
 
@@ -100,7 +104,7 @@ OzoneCon <-
 ggplot(GaringerOzone, aes(x = Date, y = Daily.Max.8.hour.Ozone.Concentration)) +
   geom_point() +
   geom_line() + 
-  labs(x = "Date", y = expression("Ozone Concentration (ppm)")) +
+  labs(x = "Date (year)", y = expression("Ozone Concentration (ppm)")) +
   scale_x_date(date_breaks="1 year", date_labels="%Y")
 
 print(OzoneCon)
@@ -113,7 +117,7 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 
 8. Use a linear interpolation to fill in missing daily data for ozone concentration. Why didn't we use a piecewise constant or spline interpolation?
 
-> Answer: In linear interpolation, the estimated point is assumed to lie on the line joining the nearest points to the left and right.
+> Answer: In linear interpolation, the estimated point is assumed to lie on the line joining the nearest points to the left and right.For this question, I would like to see nearest ozone concentration to that of pervious day and that of next day, so we need to use linear interpolation.
 
 9. Create a new data frame called GaringerOzone.monthly that contains aggregated data: mean ozone concentrations for each month. In your pipe, you will need to first add columns for year and month to form the groupings. In a separate line of code, create a new Date column with each month-year combination being set as the first day of the month (this is for graphing purposes only)
 
@@ -121,7 +125,7 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 
 11. Run a time series analysis. In this case the seasonal Mann-Kendall is most appropriate; why is this?
 
-> Answer: 
+> Answer: I think the seasonal Mann-Kendall should be one year, so I set frequency as 12, because every year have the same trend.
 
 12. To figure out the slope of the trend, run the function `sea.sens.slope` on the time series dataset. 
 
@@ -135,7 +139,8 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 GaringerOzone.monthly <-  GaringerOzone %>%
   mutate (Year = year(Date), Month = month(Date)) %>%
   group_by(Year, Month) %>%  
-  summarise(OzoneConcentration = mean(Daily.Max.8.hour.Ozone.Concentration)) # columns will be Year, Month, OzoneConcentration
+  summarise(OzoneConcentration = mean(Daily.Max.8.hour.Ozone.Concentration, n = n())) 
+##n=n() means that a variable named n will be assigned the number of rows (think number of observations) in the summarized data.
 
 GaringerOzone.monthly$Date <- as.Date(paste(GaringerOzone.monthly$Year, 
                                             GaringerOzone.monthly$Month, 1, sep="-"),  
@@ -148,9 +153,10 @@ GaringerOzone.monthly.ts <- ts(GaringerOzone.monthly$OzoneConcentration,
 # 11
 GaringerOzone.monthly.trend <- smk.test(GaringerOzone.monthly.ts)
 GaringerOzone.monthly.trend
+summarize(GaringerOzone.monthly.trend)
 
 # 12
-
+sea.sens.slope(GaringerOzone.monthly.ts)
 
 # 13
 
