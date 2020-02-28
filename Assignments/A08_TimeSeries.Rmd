@@ -69,7 +69,7 @@ libary(plyr)
 #install.packages("readr")
 libary(readr)
 
-Ozone_TimeSeries_Files = list.files(path = "Z:/872/Data/Raw/Ozone_TimeSeries/", pattern="*.csv", full.names=TRUE) 
+#Ozone_TimeSeries_Files = list.files(path = "Z:/872/Data/Raw/Ozone_TimeSeries/", pattern="*.csv", full.names=TRUE) 
 #Ozone_TimeSeries_Files
 
 
