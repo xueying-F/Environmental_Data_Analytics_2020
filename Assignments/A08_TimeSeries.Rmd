@@ -182,4 +182,4 @@ print(GaringerOzone.monthly.interpolated)
 
 14. To accompany your graph, summarize your results in context of the research question. Include output from the statistical test in parentheses at the end of your sentence. Feel free to use multiple sentences in your interpretation.
 
-> Answer: 
+> Answer:  First, seasonalvariations of ozone concentration repeat over a specific period almost one year; Second, trend variations ozone concentration move up in first six months of year and move down in second six months of year, which is a reasonably predictable pattern. However, the maximum of ozone concentration varies a lot, but overall ozone concentrations have little changed over the 2010s at this station. (z = -2.0146, p-value = 0.04394)
