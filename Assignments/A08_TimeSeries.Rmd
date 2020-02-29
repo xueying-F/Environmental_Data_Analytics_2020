@@ -125,7 +125,7 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 
 11. Run a time series analysis. In this case the seasonal Mann-Kendall is most appropriate; why is this?
 
-> Answer: I think the seasonal Mann-Kendall should be one year, so I set frequency as 12, because every year have the same trend.
+> Answer: I think the seasonal Mann-Kendall should be one year, so I set frequency as 12, because every year has the same trend.
 
 12. To figure out the slope of the trend, run the function `sea.sens.slope` on the time series dataset. 
 
@@ -133,7 +133,17 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 
 ```{r}
 # 8
+GaringerOzone$Daily.Max.8.hour.Ozone.Concentration <- 
+  na.approx(GaringerOzone$Daily.Max.8.hour.Ozone.Concentration)
 
+GaringerOzone.interpolated <-
+ggplot(GaringerOzone, aes(x = Date, y = Daily.Max.8.hour.Ozone.Concentration)) +
+  geom_point() +
+  geom_line() + 
+  labs(x = "Date (year)", y = expression("Ozone Concentration (ppm)")) +
+  scale_x_date(date_breaks="1 year", date_labels="%Y")
+
+print(GaringerOzone.interpolated)
 
 # 9
 GaringerOzone.monthly <-  GaringerOzone %>%
@@ -153,13 +163,20 @@ GaringerOzone.monthly.ts <- ts(GaringerOzone.monthly$OzoneConcentration,
 # 11
 GaringerOzone.monthly.trend <- smk.test(GaringerOzone.monthly.ts)
 GaringerOzone.monthly.trend
-summarize(GaringerOzone.monthly.trend)
+
 
 # 12
 sea.sens.slope(GaringerOzone.monthly.ts)
 
 # 13
+GaringerOzone.monthly.interpolated <-
+ggplot(GaringerOzone.monthly, aes(x = Date, y = OzoneConcentration)) +
+  geom_point() +
+  geom_line() + 
+  labs(x = "Date (year)", y = expression("Mean Ozone Concentration (ppm)")) +
+  scale_x_date(date_breaks="1 year", date_labels="%Y")
 
+print(GaringerOzone.monthly.interpolated)
 
 ```
 
