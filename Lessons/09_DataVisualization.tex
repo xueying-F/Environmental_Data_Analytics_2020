@@ -497,9 +497,10 @@ nationalparkcolors (package)
 \StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y=}\KeywordTok{expression}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"Concentration (mg/L)"}\NormalTok{))) }\OperatorTok{+}\StringTok{ }\CommentTok{# change your legend labels here}
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{expression}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{""}\NormalTok{)))}\OperatorTok{+}
-\StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{labels =} \KeywordTok{expression}\NormalTok{(}\KeywordTok{paste}\NormalTok{((NH[}\DecValTok{3}\NormalTok{])}\OperatorTok{^}\DecValTok{4}\NormalTok{), }\KeywordTok{paste}\NormalTok{((NO[}\DecValTok{2}\NormalTok{])}\OperatorTok{^}\DecValTok{3}\NormalTok{),}\StringTok{"PO"}\OperatorTok{^}\DecValTok{4}\NormalTok{,}\StringTok{"TN"}\NormalTok{,}\StringTok{"TP"}\NormalTok{),}
-                     \DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\StringTok{"#7fcdbb"}\NormalTok{, }\StringTok{"#41b6c4"}\NormalTok{, }\StringTok{"#1d91c0"}\NormalTok{, }\StringTok{"#225ea8"}\NormalTok{, }\StringTok{"#0c2c84"}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{labels =} \KeywordTok{expression}\NormalTok{(}\StringTok{"NH34"}\NormalTok{,}\StringTok{"NO23"}\NormalTok{,}\StringTok{"PO4"}\NormalTok{,}\StringTok{"TN"}\NormalTok{,}\StringTok{"TP"}\NormalTok{),}
+                                         \DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\StringTok{"#7fcdbb"}\NormalTok{, }\StringTok{"#41b6c4"}\NormalTok{, }\StringTok{"#1d91c0"}\NormalTok{, }\StringTok{"#225ea8"}\NormalTok{, }\StringTok{"#0c2c84"}\NormalTok{))}\OperatorTok{+}
 \CommentTok{# place your additional edits here}
+\CommentTok{#paste (PO[4])下标}
 \StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{expand =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.5}\NormalTok{)) }\OperatorTok{+}\StringTok{ }\CommentTok{# expand=c(0,0) has some space above the bars;0=lower space;0.5=upper space}
 \StringTok{  }\CommentTok{#scale_color_brewer(palette = "YlGnBu") +}
 \StringTok{  }\CommentTok{#scale_color_manual(values = c("#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84")) +}

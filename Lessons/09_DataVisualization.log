@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.1.7)  1 MAR 2020 17:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.1.7)  1 MAR 2020 17:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -505,7 +505,8 @@ Package: titling 2009/09/04 v2.1d maketitle typesetting
 \thanksmarkwidth=\skip49
 \thanksmargin=\skip50
 \droptitle=\skip51
-) (./09_DataVisualization.aux)
+)
+No file 09_DataVisualization.aux.
 \openout1 = `09_DataVisualization.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 128.
@@ -602,7 +603,6 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 128.
 LaTeX Info: Redefining \pageref on input line 128.
 LaTeX Info: Redefining \nameref on input line 128.
-(./09_DataVisualization.out) (./09_DataVisualization.out)
 \@outlinefile=\write4
 \openout4 = `09_DataVisualization.out'.
 
@@ -642,8 +642,8 @@ File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 150.
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-2-1".pdf, id=36, 289.
-08pt x 216.81pt>
+<"09_DataVisualization_files/figure-latex/""unnamed-chunk-2-1".pdf, id=4, 289.0
+8pt x 216.81pt>
 File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-2-1".pdf Graphic
  file (type pdf)
 <use "09_DataVisualization_files/figure-latex/""unnamed-chunk-2-1".pdf>
@@ -653,7 +653,7 @@ nk-2-1".pdf  used on input line 191.
 [1
 
 {/usr/local/texlive/2019basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-2-2".pdf, id=54, 289.
+<"09_DataVisualization_files/figure-latex/""unnamed-chunk-2-2".pdf, id=25, 289.
 08pt x 216.81pt>
 File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-2-2".pdf Graphic
  file (type pdf)
@@ -661,7 +661,7 @@ File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-2-2".pdf Graphic
 Package pdftex.def Info: "09_DataVisualization_files/figure-latex/""unnamed-chu
 nk-2-2".pdf  used on input line 202.
 (pdftex.def)             Requested size: 289.09251pt x 216.81938pt.
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-2-3".pdf, id=55, 289.
+<"09_DataVisualization_files/figure-latex/""unnamed-chunk-2-3".pdf, id=26, 289.
 08pt x 216.81pt>
 File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-2-3".pdf Graphic
  file (type pdf)
@@ -671,7 +671,7 @@ nk-2-3".pdf  used on input line 213.
 (pdftex.def)             Requested size: 289.09251pt x 216.81938pt.
 [2 <./09_DataVisualization_files/figure-latex/unnamed-chunk-2-1.pdf> <./09_Data
 Visualization_files/figure-latex/unnamed-chunk-2-2.pdf>]
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-2-4".pdf, id=71, 289.
+<"09_DataVisualization_files/figure-latex/""unnamed-chunk-2-4".pdf, id=42, 289.
 08pt x 216.81pt>
 File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-2-4".pdf Graphic
  file (type pdf)
@@ -679,7 +679,7 @@ File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-2-4".pdf Graphic
 Package pdftex.def Info: "09_DataVisualization_files/figure-latex/""unnamed-chu
 nk-2-4".pdf  used on input line 224.
 (pdftex.def)             Requested size: 289.09251pt x 216.81938pt.
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-2-5".pdf, id=72, 289.
+<"09_DataVisualization_files/figure-latex/""unnamed-chunk-2-5".pdf, id=43, 289.
 08pt x 216.81pt>
 File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-2-5".pdf Graphic
  file (type pdf)
@@ -694,7 +694,7 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
 (/usr/local/texlive/2019basic/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-3-1".pdf, id=87, 289.
+<"09_DataVisualization_files/figure-latex/""unnamed-chunk-3-1".pdf, id=58, 289.
 08pt x 216.81pt>
 File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-3-1".pdf Graphic
  file (type pdf)
@@ -703,7 +703,7 @@ Package pdftex.def Info: "09_DataVisualization_files/figure-latex/""unnamed-chu
 nk-3-1".pdf  used on input line 270.
 (pdftex.def)             Requested size: 289.09251pt x 216.81938pt.
 [4 <./09_DataVisualization_files/figure-latex/unnamed-chunk-2-5.pdf>]
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-3-2".pdf, id=98, 289.
+<"09_DataVisualization_files/figure-latex/""unnamed-chunk-3-2".pdf, id=69, 289.
 08pt x 216.81pt>
 File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-3-2".pdf Graphic
  file (type pdf)
@@ -713,8 +713,8 @@ nk-3-2".pdf  used on input line 282.
 (pdftex.def)             Requested size: 289.09251pt x 216.81938pt.
 [5 <./09_DataVisualization_files/figure-latex/unnamed-chunk-3-1.pdf> <./09_Data
 Visualization_files/figure-latex/unnamed-chunk-3-2.pdf>]
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-4-1".pdf, id=114, 289
-.08pt x 216.81pt>
+<"09_DataVisualization_files/figure-latex/""unnamed-chunk-4-1".pdf, id=86, 289.
+08pt x 216.81pt>
 File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-4-1".pdf Graphic
  file (type pdf)
 <use "09_DataVisualization_files/figure-latex/""unnamed-chunk-4-1".pdf>
@@ -761,7 +761,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/local/texlive/2019basic/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ) [6 <./09_DataVisualization_files/figure-latex/unnamed-chunk-4-1.pdf>]
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-5-1".pdf, id=138, 469
+<"09_DataVisualization_files/figure-latex/""unnamed-chunk-5-1".pdf, id=111, 469
 .755pt x 325.215pt>
 File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-5-1".pdf Graphic
  file (type pdf)
@@ -770,7 +770,7 @@ Package pdftex.def Info: "09_DataVisualization_files/figure-latex/""unnamed-chu
 nk-5-1".pdf  used on input line 429.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [7 <./09_DataVisualization_files/figure-latex/unnamed-chunk-5-1.pdf>]
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-5-2".pdf, id=149, 469
+<"09_DataVisualization_files/figure-latex/""unnamed-chunk-5-2".pdf, id=122, 469
 .755pt x 325.215pt>
 File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-5-2".pdf Graphic
  file (type pdf)
@@ -778,7 +778,7 @@ File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-5-2".pdf Graphic
 Package pdftex.def Info: "09_DataVisualization_files/figure-latex/""unnamed-chu
 nk-5-2".pdf  used on input line 437.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-5-3".pdf, id=150, 469
+<"09_DataVisualization_files/figure-latex/""unnamed-chunk-5-3".pdf, id=123, 469
 .755pt x 325.215pt>
 File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-5-3".pdf Graphic
  file (type pdf)
@@ -787,7 +787,7 @@ Package pdftex.def Info: "09_DataVisualization_files/figure-latex/""unnamed-chu
 nk-5-3".pdf  used on input line 445.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [8 <./09_DataVisualization_files/figure-latex/unnamed-chunk-5-2.pdf>]
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-5-4".pdf, id=161, 469
+<"09_DataVisualization_files/figure-latex/""unnamed-chunk-5-4".pdf, id=133, 469
 .755pt x 325.215pt>
 File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-5-4".pdf Graphic
  file (type pdf)
@@ -796,7 +796,7 @@ Package pdftex.def Info: "09_DataVisualization_files/figure-latex/""unnamed-chu
 nk-5-4".pdf  used on input line 453.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [9 <./09_DataVisualization_files/figure-latex/unnamed-chunk-5-3.pdf>]
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-5-5".pdf, id=171, 469
+<"09_DataVisualization_files/figure-latex/""unnamed-chunk-5-5".pdf, id=143, 469
 .755pt x 325.215pt>
 File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-5-5".pdf Graphic
  file (type pdf)
@@ -810,7 +810,7 @@ LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line
 (/usr/local/texlive/2019basic/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-5-6".pdf, id=181, 469
+<"09_DataVisualization_files/figure-latex/""unnamed-chunk-5-6".pdf, id=154, 469
 .755pt x 325.215pt>
 File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-5-6".pdf Graphic
  file (type pdf)
@@ -819,66 +819,23 @@ Package pdftex.def Info: "09_DataVisualization_files/figure-latex/""unnamed-chu
 nk-5-6".pdf  used on input line 487.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [11 <./09_DataVisualization_files/figure-latex/unnamed-chunk-5-5.pdf>]
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-5-7".pdf, id=193, 469
-.755pt x 325.215pt>
-File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-5-7".pdf Graphic
- file (type pdf)
-<use "09_DataVisualization_files/figure-latex/""unnamed-chunk-5-7".pdf>
-Package pdftex.def Info: "09_DataVisualization_files/figure-latex/""unnamed-chu
-nk-5-7".pdf  used on input line 512.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[12 <./09_DataVisualization_files/figure-latex/unnamed-chunk-5-6.pdf>]
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-6-1".pdf, id=210, 433
-.62pt x 505.89pt>
-File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-6-1".pdf Graphic
- file (type pdf)
-<use "09_DataVisualization_files/figure-latex/""unnamed-chunk-6-1".pdf>
-Package pdftex.def Info: "09_DataVisualization_files/figure-latex/""unnamed-chu
-nk-6-1".pdf  used on input line 567.
-(pdftex.def)             Requested size: 433.62555pt x 505.89645pt.
-[13 <./09_DataVisualization_files/figure-latex/unnamed-chunk-5-7.pdf>] [14 <./0
-9_DataVisualization_files/figure-latex/unnamed-chunk-6-1.pdf>]
-<"09_DataVisualization_files/figure-latex/""unnamed-chunk-7-1".pdf, id=242, 469
-.755pt x 325.215pt>
-File: "09_DataVisualization_files/figure-latex/""unnamed-chunk-7-1".pdf Graphic
- file (type pdf)
-<use "09_DataVisualization_files/figure-latex/""unnamed-chunk-7-1".pdf>
-Package pdftex.def Info: "09_DataVisualization_files/figure-latex/""unnamed-chu
-nk-7-1".pdf  used on input line 625.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[15 <./09_DataVisualization_files/figure-latex/unnamed-chunk-7-1.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 675.
-[16]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 675.
-(./09_DataVisualization.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 675.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 675.
-Package rerunfilecheck Info: File `09_DataVisualization.out' has not changed.
-(rerunfilecheck)             Checksum: 4B5B1620150253F6CE134C2AF61EB58B;1316.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 675.
- ) 
-Here is how much of TeX's memory you used:
- 13334 strings out of 493610
- 199863 string characters out of 6159294
- 299523 words of memory out of 5000000
- 17244 multiletter control sequences out of 15000+600000
- 39203 words of font info for 58 fonts, out of 8000000 for 9000
- 319 hyphenation exceptions out of 8191
- 34i,6n,42p,983b,447s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2019basic/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/
-local/texlive/2019basic/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</usr/local/tex
-live/2019basic/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/
-2019basic/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2019b
-asic/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2019basic/t
-exmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2019basic/texmf-d
-ist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2019basic/texmf-dist/f
-onts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2019basic/texmf-dist/fonts/
-type1/public/lm/lmtt10.pfb></usr/local/texlive/2019basic/texmf-dist/fonts/type1
-/public/lm/lmtti10.pfb>
-Output written on 09_DataVisualization.pdf (16 pages, 2366113 bytes).
-PDF statistics:
- 305 PDF objects out of 1000 (max. 8388607)
- 239 compressed objects within 3 object streams
- 39 named destinations out of 1000 (max. 500000)
- 8342 words of extra memory for PDF output out of 10000 (max. 10000000)
 
+! Package inputenc Error: Unicode character 下 (U+4E0B)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.503 \CommentTok{#paste (PO[4])下标}
+                                        
+Here is how much of TeX's memory you used:
+ 13270 strings out of 493610
+ 198201 string characters out of 6159294
+ 299002 words of memory out of 5000000
+ 17211 multiletter control sequences out of 15000+600000
+ 38566 words of font info for 53 fonts, out of 8000000 for 9000
+ 319 hyphenation exceptions out of 8191
+ 34i,6n,42p,983b,373s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+!  ==> Fatal error occurred, no output PDF file produced!

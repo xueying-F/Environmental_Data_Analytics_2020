@@ -196,9 +196,10 @@ Nutrientplot <-
   geom_boxplot() +
   labs(y=expression(paste("Concentration (mg/L)"))) + # change your legend labels here
   labs(x=expression(paste("")))+
-  scale_color_manual(labels = expression(paste((NH[3])^4), paste((NO[2])^3),"PO"^4,"TN","TP"),
-                     values = c("#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84"))+
+  scale_color_manual(labels = expression("NH34","NO23","PO4","TN","TP"),
+                                         values = c("#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84"))+
 # place your additional edits here
+#paste (PO[4])下标
   scale_y_continuous(expand = c(0, 0.5)) + # expand=c(0,0) has some space above the bars;0=lower space;0.5=upper space
   #scale_color_brewer(palette = "YlGnBu") +
   #scale_color_manual(values = c("#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84")) +
