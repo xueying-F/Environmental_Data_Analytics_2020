@@ -194,8 +194,8 @@ print(NvsP2)
 Nutrientplot <-
   ggplot(PeterPaul.chem.nutrients.gathered, aes(x = lakename, y = concentration, color = nutrient)) +
   geom_boxplot() +
-  labs(x=expression(paste("concentration (mg/L)"))) + # change your legend labels here
-  labs(y=expression(paste("")))+
+  labs(y=expression(paste("concentration (mg/L)"))) + # change your legend labels here
+  labs(x=expression(paste("")))+
   scale_color_manual(labels = c("NH34", "NO23","PO4","TN","YP"),
                      values = c("#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84"))+
 # place your additional edits here
