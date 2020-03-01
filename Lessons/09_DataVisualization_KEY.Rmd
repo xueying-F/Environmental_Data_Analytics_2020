@@ -195,15 +195,15 @@ Nutrientplot <-
 # place your additional edits here
   labs(x = "", y = expression(Concentration ~ (mu*g / L)), color = "Nutrient") +
   scale_y_continuous(expand = c(0, 0)) +
-  # scale_color_brewer(palette = "YlGnBu", values = (n = 9)[4:9],
-  #                    labels = c(expression(NH[4]^{"+"}), expression(NO[3]^{"-"}),
-  #                               expression(PO[4]^{"3-"}), "TN", "TP")) +
-  # scale_color_manual(values = c("#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84"),
-  #                    labels = c(expression(NH[4]^{"+"}), expression(NO[3]^{"-"}),
-  #                               expression(PO[4]^{"3-"}), "TN", "TP")) +
-  scale_color_viridis(discrete = TRUE, option = "magma", end = 0.8,
+   #scale_color_brewer(palette = "YlGnBu", values = (n = 9)[4:9],
+   #                   labels = c(expression(NH[4]^{"+"}), expression(NO[3]^{"-"}),
+   #                              expression(PO[4]^{"3-"}), "TN", "TP")) +
+   scale_color_manual(values = c("#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#0c2c84"),
                       labels = c(expression(NH[4]^{"+"}), expression(NO[3]^{"-"}),
-                                expression(PO[4]^{"3-"}), "TN", "TP")) +
+                               expression(PO[4]^{"3-"}), "TN", "TP")) +
+  #scale_color_viridis(discrete = TRUE, option = "magma", end = 0.8,
+  #                    labels = c(expression(NH[4]^{"+"}), expression(NO[3]^{"-"}),
+   #                             expression(PO[4]^{"3-"}), "TN", "TP")) +
   theme(legend.position = "right")
 print(Nutrientplot)
 ```
