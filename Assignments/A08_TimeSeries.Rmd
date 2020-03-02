@@ -125,7 +125,7 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 
 11. Run a time series analysis. In this case the seasonal Mann-Kendall is most appropriate; why is this?
 
-> Answer: I think the seasonal Mann-Kendall should be one year, so I set frequency as 12, because every year has the same trend.
+> Answer: I think the seasonal Mann-Kendall is most appropriate, because we would like to test null hypothesis "true slop is not equal to 0", and see the overall trend from 2010 to 2019. Moreover,  seasonal Mann-Kendall can break down the potential seasonal trend into more interpretable components, and see the seaaonality.
 
 12. To figure out the slope of the trend, run the function `sea.sens.slope` on the time series dataset. 
 
@@ -163,6 +163,7 @@ GaringerOzone.monthly.ts <- ts(GaringerOzone.monthly$OzoneConcentration,
 # 11
 GaringerOzone.monthly.trend <- smk.test(GaringerOzone.monthly.ts)
 GaringerOzone.monthly.trend
+summary(GaringerOzone.monthly.trend)
 
 
 # 12
@@ -182,4 +183,4 @@ print(GaringerOzone.monthly.interpolated)
 
 14. To accompany your graph, summarize your results in context of the research question. Include output from the statistical test in parentheses at the end of your sentence. Feel free to use multiple sentences in your interpretation.
 
-> Answer:  First, seasonalvariations of ozone concentration repeat over a specific period almost one year; Second, trend variations ozone concentration move up in first six months of year and move down in second six months of year, which is a reasonably predictable pattern. However, the maximum of ozone concentration varies a lot, but overall ozone concentrations have little changed over the 2010s at this station. (z = -2.0146, p-value = 0.04394)
+> Answer:  First, seasonal variations of ozone concentration repeat over a specific period about one year; Second, trend variations ozone concentration move up in first six months of year and move down in second six months of year, which is a reasonably predictable pattern. However, the maximum of ozone concentration varies a lot, which is a slight decrease trend (S = -0.0002044163), but overall ozone concentrations have no significant changed over the 2010s at this station (z = -1.963, p-value = 0.04965).
