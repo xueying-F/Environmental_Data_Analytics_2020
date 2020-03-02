@@ -63,15 +63,9 @@ GaringerOzone2019<- read.csv("./Data/Raw/Ozone_TimeSeries/EPAair_O3_GaringerNC20
 6. Use a `left_join` to comine the data frames. Specify the correct order of data frames within this function so that the final dimensions are 3652 rows and 3 columns. Call your combined data frame GaringerOzone. 
 
 ```{r}
-# 2 
-#install.packages ("plyr")
-libary(plyr)
-#install.packages("readr")
-libary(readr)
-
+#2 
 #Ozone_TimeSeries_Files = list.files(path = "Z:/872/Data/Raw/Ozone_TimeSeries/", pattern="*.csv", full.names=TRUE) 
 #Ozone_TimeSeries_Files
-
 
 Ozone_TimeSeries_Files = list.files(path = "./Data/Raw/Ozone_TimeSeries/", pattern="*.csv", full.names=TRUE) 
 Ozone_TimeSeries_Files
