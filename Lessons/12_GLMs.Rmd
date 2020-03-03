@@ -112,7 +112,7 @@ irradiancebydepth2 <-
   geom_smooth(method = "lm") + # two variables could use geom_smooth
   scale_y_log10() + # it will give the same X axis label name  !!!!!!!! pay attentionon interprete log
   geom_point() 
-print(irradiancebydepth2) ssss
+print(irradiancebydepth2)
 
 irradiancebydepth2 <- 
   ggplot(PeterPaul.chem.nutrients, aes(x = depth, y = log(irradianceWater))) + # log on y can see the x axis label change
@@ -124,7 +124,7 @@ print(irradiancebydepth2)
 # SE can also be removed (make a new plot
 irradiancebydepth2 <- 
     ggplot(PeterPaul.chem.nutrients, aes(x = depth, y = irradianceWater)) +
-    geom_point(pch=1, alpha =o.5, color = "lightblue") +   # pch= plotting ‘character’, i.e., symbol to use.
+    geom_point(pch=1, alpha =0.5, color = "lightblue") +   # pch= plotting ‘character’, i.e., symbol to use.
     scale_y_log10() +  ## scale by log, so the graph is correct
     labs(x="Depth (m)") +
     labs(y=expression(Irradiance (W*m^-2)))+ 
@@ -150,6 +150,7 @@ It is possible, and often useful, to consider multiple continuous explanatory va
 TPregression <- lm(data = subset(PeterPaul.chem.nutrients, lakename == "Paul Lake"), 
                    tp_ug ~ depth + dissolvedOxygen) # depend on depth
 summary(TPregression)
+
 
 #install.packages("viridis")
 library(viridis)
@@ -201,4 +202,5 @@ TPmodel <- lm(data = Paul.naomit, tp_ug ~ dissolvedOxygen + temperature_C + tn_u
 summary(TPmodel)
 
 # smaller AIC value is better
+
 ```
