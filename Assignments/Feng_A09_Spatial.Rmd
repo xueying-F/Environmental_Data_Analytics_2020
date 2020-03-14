@@ -25,12 +25,149 @@ Here are your three options:
 
 1. Reproduce figure 1b from the spatial lesson, found in section 3.2.2. You may choose a state other than North Carolina, but your map should still contain the spatial features contained in figure 1b in the "img" folder. 
 
+```{r activity.reproducing.figure1b}
+# select MS
+# add your code here
+ms_state_bounds_geom <- southeast_state_bounds %>%
+  filter(NAME == "Mississippi") %>%
+  st_geometry()
+
+# make figure 1b
+# find watersheds that overlap with NC (want the whole watershed, not just the part of the watershed that's inside the NC bounds)
+# add your code here
+ms_basins_nf_seplains <- basins_nf_seplains %>%
+  st_overlaps(ms_state_bounds_geom)
+
+# look at result
+# add your code here
+# shows first 6 results list of integers where 0 = false and 1 = true
+# still is an sf object but is different than what we're used to
+##print(length(ms_basins_nf_seplains))
+print(ms_basins_nf_seplains[1:6])
+
+# make a function to convert binary to logic
+# add your code here
+ms_basins_nf_seplains_logic <-
+
+# source: http://rpubs.com/sogletr/sf-ops
+
+# map function on data and select only true values
+# add your code here
+ms_basins_nf_seplains_logic[ !FALSE ]
+
+# look at result
+# add your code here
+# shows first 6 results (they are all FALSE)
+ms_basins_nf_seplains_logic[1:6]
+
+# use nc_basins_overlap_logic to select only watersheds that overlap
+# add your code here
+# Maybe there's an alternative tidyverse-based way using which and %in%?
+ms_basins_overlap_logic <- ms_basins_nf_seplains_logic
+
+# check class
+# add your code here
+# sf object
+class(ms_basins_overlap_logic)
+
+# select Southeast gages only
+# add your code here
+# stretch break...this might take a while to run
+southeast_gages <- gages %>%
+  st_intersection(southeast_state_bounds)
+
+# use nc_basins_overlap_sel to find gages inside
+# add your code here
+ms_southeast_gages <- southeast_gages %>%
+  st_intersection(ms_basins_overlap_logic)
+
+# stretch break...this might take a while to run
+
+# convert all to WGS84
+# add your code here
+ms_bbox <- ms_state_bounds_geom %>%
+  st_buffer(dist = 150000) %>% # this value is very arbitrary just wanting to make a large buffer around geometry
+  st_transform(4326) %>% # WGS84 (for lat and long)
+  st_bbox()
+ms_bbox # check
+
+ms_bbox_fix <- c(left = ms_bbox[[1]], bottom = ms_bbox[[2]], right = ms_bbox[[3]], top = ms_bbox[[4]])
+ms_bbox_fix
+
+ms_state_bounds_geom_wsg84 <- ms_state_bounds_geom %>%
+  st_transform(4326)
+st_crs(ms_state_bounds_geom_wsg84)
+
+# plot figure 1b
+# add your code here
+ms_basemap <- get_map(ms_bbox_fix, maptype = 'terrain-background', source = 'stamen', zoom = 8)
+class(ms_basemap)
+st_crs(ms_basemap)
+
+pdf(here("outputs", "ms_with_basemap.pdf"), width = 11, height = 8.5)
+ggmap(ms_basemap) +
+  geom_sf(data = ms_state_bounds_geom_wsg84, fill = NA, lwd = 1, inherit.aes = FALSE)
+dev.off()
+
+```
+
 2. Create a new map that mixes spatial and tabular data, as in section 3.3 of the spatial lesson. You may use the maps created in the lesson as an example, but your map should contain data other than precipitation days per year. This map should include: 
 
 * State boundary layer
 * Basin boundary layer
 * Gage layer
 * Tabular data (as an aesthetic for one of the layers)
+
+```{r joining.gage.data}
+my_tabular_data_raw1 <- read_csv(here("data", "tabular_data", "conterm_topo.txt")) 
+my_tabular_data_raw2 <- read_csv(here("data", "tabular_data", "conterm_basinid.txt")) 
+geology_tabular_data_raw <- read_csv(here("data", "tabular_data", "conterm_geology.txt")) 
+
+# select watersheds that intersect with NC bounds
+# add your code here
+nc_basins_nf_seplains <- basins_nf_seplains %>%
+  st_intersection(nc_state_bounds_geom)
+
+# check
+# add your code here
+head(nc_basins_nf_seplains)
+name(nc_basins_nf_seplains)
+
+# Use the NC state boundary we used earlier to select all the stream gages in NC
+nc_gages <- gages %>%
+  st_intersection(nc_state_bounds_geom)
+
+# take a look at ng_gages
+head(nc_gages)
+names(nc_gages)
+# we see there are some variables we could color by but the tabular data has many more
+
+# take a look at my_tabular_data_raw
+names(geology_tabular_data_raw)
+
+# check column names of nc_gages to look for joining key
+names(nc_gages)
+# use "STAID"
+
+# join the tabular data to nc_gages
+nc_gages_basin <- nc_gages %>%
+  left_join(geology_tabular_data_raw, by = "STAID")
+
+# check that it worked
+names(nc_gages_basin)
+# looks good!
+
+# plot DRAIN_SQKM for each gage location
+pdf(here("outputs", "nc_gages_by_tabular_data2.pdf"), width = 11, height = 8.5)
+ggplot() +
+  geom_sf(data = nc_state_bounds_geom, fill=NA) +
+  geom_sf(data = nc_basins_nf_seplains, alpha = 0.25) +
+  geom_sf(data = nc_gages_basin, aes(color = GEOL_REEDBUSH_DOM_PCT), size = 3) +
+  scale_color_gradient(low = "white", high = "blue") +
+  labs(color = "Gage with Watershed # Percentage by Geology Type") +
+  theme_bw()
+dev.off()
+```
 
 3. Create a map of any other spatial data. This could be data from the spatial lesson, data from our other course datasets (e.g., the Litter dataset includes latitude and longitude of trap sites), or another dataset of your choosing.  Your map should include: 
 
