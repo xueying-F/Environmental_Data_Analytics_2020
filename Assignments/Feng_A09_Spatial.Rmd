@@ -158,13 +158,13 @@ names(nc_gages_basin)
 # looks good!
 
 # plot DRAIN_SQKM for each gage location
-pdf(here("outputs", "nc_gages_by_tabular_data2.pdf"), width = 11, height = 8.5)
+pdf(here("outputs", "nc_gages_by_tabular_Geology.pdf"), width = 11, height = 8.5)
 ggplot() +
   geom_sf(data = nc_state_bounds_geom, fill=NA) +
   geom_sf(data = nc_basins_nf_seplains, alpha = 0.25) +
   geom_sf(data = nc_gages_basin, aes(color = GEOL_REEDBUSH_DOM_PCT), size = 3) +
-  scale_color_gradient(low = "white", high = "blue") +
-  labs(color = "Gage with Watershed # Percentage by Geology Type") +
+  scale_color_gradient(low = "white", high = "DarkGreen") +
+  labs(color = "Gage with # Percentage Dominant Geology Type") +
   theme_bw()
 dev.off()
 ```
