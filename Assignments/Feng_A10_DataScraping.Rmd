@@ -63,14 +63,14 @@ webpage <- read_html(url)
 ```{r}
 
 State <- webpage %>% html_nodes("table:nth-child(8) td:nth-child(1)") %>% html_text()
-Rivers.Assessed.mi2 <- webpage %>% html_nodes("table:nth-child(8) td:nth-child(2)") %>% html_text()
+Rivers.Assessed.mi <- webpage %>% html_nodes("table:nth-child(8) td:nth-child(2)") %>% html_text()
 Rivers.Assessed.percent <- webpage %>% html_nodes("table:nth-child(8) td:nth-child(3)") %>% html_text()
-Rivers.Impaired.mi2 <- webpage %>% html_nodes("table:nth-child(8) td:nth-child(4)") %>% html_text()
+Rivers.Impaired.mi <- webpage %>% html_nodes("table:nth-child(8) td:nth-child(4)") %>% html_text()
 Rivers.Impaired.percent <- webpage %>% html_nodes("table:nth-child(8) td:nth-child(5)") %>% html_text()
 Rivers.Impaired.percent.TMDL <- webpage %>% html_nodes("table:nth-child(8) td:nth-child(6)") %>% html_text()
 
-Rivers <- data.frame(State, Rivers.Assessed.mi2, Rivers.Assessed.percent, 
-                          Rivers.Impaired.mi2, Rivers.Impaired.percent, 
+Rivers <- data.frame(State, Rivers.Assessed.mi, Rivers.Assessed.percent, 
+                          Rivers.Impaired.mi, Rivers.Impaired.percent, 
                           Rivers.Impaired.percent.TMDL)
 ```
 
@@ -81,12 +81,14 @@ Rivers <- data.frame(State, Rivers.Assessed.mi2, Rivers.Assessed.percent,
 ```{r}
 # 4
 # Use str_replace to remove non-numeric characters
-Rivers$Rivers.Assessed.mi2 <- str_replace(Rivers$Rivers.Assessed.mi2,
+Rivers$Rivers.Assessed.mi <- str_replace(Rivers$Rivers.Assessed.mi,
                                                       pattern = "([,])", replacement = "")  
 Rivers$Rivers.Assessed.percent <- str_replace(Rivers$Rivers.Assessed.percent,
+                                                      pattern = "([*])", replacement = "")
+Rivers$Rivers.Assessed.percent <- str_replace(Rivers$Rivers.Assessed.percent,
                                                       pattern = "([%])", replacement = "")
-Rivers$Rivers.Impaired.mi2 <- str_replace(Rivers$Rivers.Impaired.mi2,
-                                                      pattern = "([,])", replacement = "")  
+Rivers$Rivers.Impaired.mi <- str_replace(Rivers$Rivers.Impaired.mi,
+                                                      pattern = "([,])", replacement = "") 
 Rivers$Rivers.Impaired.percent <- str_replace(Rivers$Rivers.Impaired.percent, 
                                                   pattern = "([%])", replacement = "")
 Rivers$Rivers.Impaired.percent.TMDL <- str_replace(Rivers$Rivers.Impaired.percent.TMDL, 
@@ -98,9 +100,9 @@ Rivers$Rivers.Impaired.percent.TMDL <- str_replace(Rivers$Rivers.Impaired.percen
 # 5
 str(Rivers)
 
-Rivers$Rivers.Assessed.mi2 <- as.numeric(Rivers$Rivers.Assessed.mi2)  
+Rivers$Rivers.Assessed.mi <- as.numeric(Rivers$Rivers.Assessed.mi)  
 Rivers$Rivers.Assessed.percent <- as.numeric(Rivers$Rivers.Assessed.percent)
-Rivers$Rivers.Impaired.mi2 <- as.numeric(Rivers$Rivers.Impaired.mi2)  
+Rivers$Rivers.Impaired.mi <- as.numeric(Rivers$Rivers.Impaired.mi)  
 Rivers$Rivers.Impaired.percent <- as.numeric(Rivers$Rivers.Impaired.percent)
 Rivers$Rivers.Impaired.percent.TMDL <- as.numeric(Rivers$Rivers.Impaired.percent.TMDL)
 
@@ -138,9 +140,9 @@ Lakes <- Lakes %>%
 Lakes$Lakes.Assessed.acres <- str_replace(Lakes$Lakes.Assessed.acres,
                                                       pattern = "([,])", replacement = "")  
 Lakes$Lakes.Assessed.percent <- str_replace(Lakes$Lakes.Assessed.percent,
-                                                      pattern = "([%])", replacement = "")
-Lakes$Lakes.Assessed.percent <- str_replace(Lakes$Lakes.Assessed.percent,
                                                       pattern = "([*])", replacement = "")
+Lakes$Lakes.Assessed.percent <- str_replace(Lakes$Lakes.Assessed.percent,
+                                                      pattern = "([%])", replacement = "")
 Lakes$Lakes.Impaired.acres <- str_replace(Lakes$Lakes.Impaired.acres,
                                                       pattern = "([,])", replacement = "")  
 Lakes$Lakes.Impaired.percent <- str_replace(Lakes$Lakes.Impaired.percent, 
@@ -174,16 +176,6 @@ Rivers_Lakes <- full_join(Rivers, Lakes, by = 'State')
 
 (You may choose to run a statistical test or add a line of best fit; this is optional but may aid in your interpretations)
 ```{r}
-Rivers_model <- ggplot(Rivers, aes(x = Rivers.Assessed.mi2, y = Rivers.Impaired.mi2)) +
-  geom_point(shape = 21, size = 2, alpha = 0.5) +
-  #scale_fill_viridis_c(option = "plasma", begin = 0.2, end = 0.9, direction = -1) +
-  #ylim(0,1000) +
-  geom_label_repel(aes(label = State), nudge_x = -5, nudge_y = -5, size = 3, alpha = 0.8) +
-  #geom_smooth(method = "lm", se= FALSE) + 
-  labs(x = expression("Rivers Area Assessed (mi"^"2"*")"), 
-       y = expression("Rivers Area Impaired (mi"^"2"*")")) +
-  theme(legend.spacing.x = unit(1, "cm"))
-print(Rivers_model)
 
 Rivers_model_Pertcent <- 
   ggplot(Rivers, aes(x = Rivers.Assessed.percent, y = Rivers.Impaired.percent)) +
@@ -198,10 +190,8 @@ Rivers_model_Pertcent <-
 print(Rivers_model_Pertcent)
 
 
-
-
 ```
 
 12. Summarize the findings that accompany your graph. You may choose to suggest further research or data collection to help explain the results.
 
->
+>Based on the percentage of river miles assessed and percentage of assessed rivers that have a nutrient-related impairment, I found Delaware,  Maine, Michigan, New Hampshire, Pennsylvania, and North Dakota have highest assessed value, but Delaware also has high percent of nutrient-related impairment. Moreover, Hawii, Kansas, Frida, and Ohio also have high percent of nutrient-related impairment compare to other state. However, both percent value of most states ar below 40 Percent.
