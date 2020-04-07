@@ -25,11 +25,31 @@ editor_options:
     + Chunk options allow for flexibility when the code runs and when the document is knitted
 3. **Text** with formatting options for readability in knitted document
 
+```{r}
+# show chunk
+## Mac: command + option(alt)+i
+## PC: control + alt +i
+```
+
 A handy cheat sheet for R markdown can be found [here](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf). Another one can be found [here](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf).
 
 ## WHY R MARKDOWN?
 
 <Fill in our discussion below with bullet points. Use italics and bold for emphasis (hint: use the cheat sheets to figure out how to make bold and italic text).>
+
+* *italic*
+* **bold**
+
+* **Documentation** of data pipline steps
+* Store *code*, *visualizations*, and *test* in one place
+* **Organize** code into sections
+* Asthetically pleasing 
+* Manage changes in a *reproducible* fashion
+
+1.organize neat looking final product
+2.data visualization + report writing process
+3.run and display chunks of codes
+
 
 ## TEXT EDITING CHALLENGE
 
